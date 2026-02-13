@@ -80,7 +80,7 @@ export function LightLines({
       const element = container.querySelector(
         light.selector,
       ) as SVGPathElement | null;
-      const duration = (Math.floor(Math.random() * 59) + 2) * 0.5 + 0.5;
+      const duration = (Math.floor(Math.random() * 59) + 2) * 0.5 + 0.5; // 2-60 seconds
       return {
         element,
         from: light.from,

@@ -6,13 +6,21 @@ const HeaderClient = ({ children }: { children: React.ReactNode }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(
-        window.innerWidth > 1024 ? window.scrollY > 200 : window.scrollY > 100,
-      );
+      const LARGE_SCREEN_BREAKPOINT = 1024;
+      const DESKTOP_SCROLL_THRESHOLD = 200;
+      const MOBILE_SCROLL_THRESHOLD = 100;
+
+      const isLargeScreen = window.innerWidth > LARGE_SCREEN_BREAKPOINT;
+      const scrollThreshold = isLargeScreen
+        ? DESKTOP_SCROLL_THRESHOLD
+        : MOBILE_SCROLL_THRESHOLD;
+
+      setIsScrolled(window.scrollY > scrollThreshold);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  
   return (
     <header
       className={cn(

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { connection } from "next/server";
 
 const FOOTER_LINKS = [
   { href: "/cards", label: "Cards" },
@@ -7,9 +8,11 @@ const FOOTER_LINKS = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
-const currentYear = new Date().getFullYear();
 
-export function Footer() {
+export async function Footer() {
+  await connection()
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="w-full border-t border-white/10 bg-linear-to-r from-zinc-900 via-slate-900 to-zinc-900 text-zinc-100">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
