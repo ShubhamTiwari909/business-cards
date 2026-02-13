@@ -20,7 +20,7 @@ const HeaderClient = ({ children }: { children: React.ReactNode }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  
+
   return (
     <header
       className={cn(

@@ -8,9 +8,8 @@ const FOOTER_LINKS = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
-
 export async function Footer() {
-  await connection()
+  await connection();
   const currentYear = new Date().getFullYear();
 
   return (
