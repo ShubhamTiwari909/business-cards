@@ -1,3 +1,10 @@
-export default function Home() {
-  return <div className="text-5xl">Business cards</div>;
+const fetchData = async () => {
+  const response = await fetch('http://localhost:3001');
+  const data = await response.json();
+  return data;
+}
+
+export default async function Home() {
+  const data = await fetchData();
+  return <div className="text-5xl">Business cards {data.ok ? 'true' : 'false'}</div>;
 }
