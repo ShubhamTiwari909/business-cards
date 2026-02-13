@@ -10,7 +10,11 @@ export const globalErrorHandler = (
   next: NextFunction,
 ) => {
   const statusCode = err.statusCode || 500;
-  const message = err.message || "Internal Server Error";
+  const message =
+    process.env.NODE_ENV === "production"
+      ? "Internal Server Error"
+      : err.message;
+  console.error(err.stack);
   res.status(statusCode).json({
     status: "error",
     statusCode,

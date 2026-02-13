@@ -1,19 +1,30 @@
 import helmet from "helmet";
 import cors from "cors";
 
-const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "http://localhost:3000";
+const whitelist = [process.env.FRONTEND_ORIGIN, "http://localhost:3000"].filter(
+  Boolean,
+);
 
 export const cspHandler = helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'none'"],
-      frameAncestors: ["'self'", FRONTEND_ORIGIN],
+      frameAncestors: [
+        "'self'",
+        process.env.FRONTEND_ORIGIN || "http://localhost:3000",
+      ],
       formAction: ["'none'"],
     },
   },
 });
 
 export const corsHandler = cors({
-  origin: FRONTEND_ORIGIN,
+  origin: function (origin, callback) {
+    if (whitelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   optionsSuccessStatus: 200,
 });
