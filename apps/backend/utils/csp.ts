@@ -20,7 +20,7 @@ export const cspHandler = helmet({
 
 export const corsHandler = cors({
   origin: function (origin, callback) {
-    if (whitelist.includes(origin)) {
+    if (!origin || whitelist.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
