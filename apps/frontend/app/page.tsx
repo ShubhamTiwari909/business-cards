@@ -1,7 +1,3 @@
 export default function Home() {
-  return (
-    <div className="text-5xl">
-      Business cards
-    </div>
-  );
+  return <div className="text-5xl">Business cards</div>;
 }
