@@ -5,6 +5,7 @@ const cardSchema = new mongoose.Schema(
   {
     visibility: {
       type: String,
+      required: true,
       enum: ["public", "private"],
       default: "private",
     },
