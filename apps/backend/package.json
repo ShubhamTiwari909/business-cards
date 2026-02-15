@@ -3,7 +3,8 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "dev": "ts-node-dev --respawn --transpile-only app.ts"
+        "dev": "ts-node-dev --respawn --transpile-only app.ts",
+        "build": "tsc"
     },
     "dependencies": {
         "cors": "^2.8.6",

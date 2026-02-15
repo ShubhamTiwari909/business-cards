@@ -22,6 +22,10 @@ app.get("/", dynamicLimiter(10, { windowMs: 60 * 1000 }), (_, res) => {
 app.use(globalErrorHandler);
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, async () => {
+
+(async () => {
   await dbConnection();
-});
+  app.listen(PORT, () => {
+    console.log(`Server is running on port: ${PORT}`);
+  });
+})();

@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
+import { User } from "./Users";
 
 const cardSchema = new mongoose.Schema(
   {
     visibility: {
+      type: String,
       enum: ["public", "private"],
       default: "private",
     },
@@ -122,14 +124,12 @@ cardSchema.index({ userId: 1, createdAt: -1 });
 
 cardSchema.pre("save", async function () {
   if (this.isNew) {
-    const User = mongoose.model("User");
     await User.findByIdAndUpdate(this.userId, { $inc: { cardCount: 1 } });
   }
 });
 
 // Pre-deleteOne hook (document) to decrease card count when a card document is removed
 cardSchema.pre("deleteOne", { document: true }, async function () {
-  const User = mongoose.model("User");
   await User.findByIdAndUpdate(this.userId, { $inc: { cardCount: -1 } });
 });
 
