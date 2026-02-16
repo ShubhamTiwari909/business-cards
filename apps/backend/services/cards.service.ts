@@ -73,37 +73,10 @@ export async function getCardById(id: string) {
 }
 
 export async function createCard(body: CreateCardInput) {
-  const {
-    visibility,
-    userId,
-    cardType,
-    name,
-    title,
-    company,
-    email,
-    phone,
-    bio,
-    profileImage,
-    socialLinks,
-    address,
-    theme,
-  } = body;
+  const { userId, ...cardData } = body;
+
   validateObjectId(userId as string);
-  const card = new Card({
-    visibility,
-    userId,
-    cardType,
-    name,
-    title,
-    company,
-    email,
-    phone,
-    bio,
-    profileImage,
-    socialLinks,
-    address,
-    theme,
-  });
+  const card = new Card(cardData);
   await card.save();
   await User.findByIdAndUpdate(userId, { $inc: { cardCount: 1 } });
   return card.toObject();
