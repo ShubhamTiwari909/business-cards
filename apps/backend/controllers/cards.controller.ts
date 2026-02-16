@@ -41,7 +41,7 @@ export async function getById(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const parsedBody = idSchema.safeParse(req.params.id);
+    const parsedBody = idSchema.safeParse({ id: req.params.id });
     if (!parsedBody.success) {
       res.status(400).json({
         message: "Bad Request - invalid parameters",
@@ -142,7 +142,7 @@ export async function remove(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const parsedBody = idSchema.safeParse(req.params.id);
+    const parsedBody = idSchema.safeParse({ id: req.params.id });
     if (!parsedBody.success) {
       res.status(400).json({
         message: "Bad Request - invalid parameters",

@@ -9,7 +9,7 @@ router.post(
   dynamicLimiter(10, { windowMs: 60 * 1000 * 60 }),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await addUser(req, res);
+      await addUser(req, res, next);
     } catch (error) {
       next(error);
     }

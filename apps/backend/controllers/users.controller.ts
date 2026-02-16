@@ -1,12 +1,16 @@
 import { User } from "../models/Users";
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { addUserSchema } from "../types/users.types";
 
 export async function checkIfUserExists(email: string) {
-  return await User.findOne({ email }).select("_id passkey").lean();
+  return await User.findOne({ email }).select("_id").lean();
 }
 
-export const addUser = async (req: Request, res: Response) => {
+export const addUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const parsedBody = addUserSchema.safeParse(req.body);
   if (!parsedBody.success) {
     return res.status(400).json({
@@ -34,7 +38,6 @@ export const addUser = async (req: Request, res: Response) => {
     await newUser.save();
     res.status(201).json({ message: "User saved" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Internal Server Error" });
+    next(err);
   }
 };

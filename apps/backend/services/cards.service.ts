@@ -33,7 +33,10 @@ export async function getCards(
 
   const cursorId = cursor ? new mongoose.Types.ObjectId(cursor) : null;
 
-  const filter: any = {
+  const filter: {
+    userId?: string;
+    _id?: { $lt: mongoose.Types.ObjectId };
+  } = {
     ...(userId ? { userId } : {}),
     ...(cursorId ? { _id: { $lt: cursorId } } : {}),
   };
@@ -108,9 +111,10 @@ export async function createCard(body: CreateCardInput) {
 
 export async function updateCard(id: string, body: UpdateCardInput) {
   validateObjectId(id);
+  const { id: _omit, ...updateFields } = body;
   const card = await Card.findByIdAndUpdate(
     id,
-    { $set: body },
+    { $set: updateFields },
     { new: true, runValidators: true },
   )
     .lean()
