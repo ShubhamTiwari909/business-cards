@@ -84,7 +84,10 @@ export async function update(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const parsedBody = updateCardSchema.safeParse(req.body);
+    const parsedBody = updateCardSchema.safeParse({
+      ...req.body,
+      id: req.params.id,
+    });
     if (!parsedBody.success) {
       res.status(400).json({
         message: "Bad Request - invalid parameters",
@@ -106,19 +109,27 @@ export async function updateVisibility(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const parsedBody = updateCardVisibilitySchema.safeParse(req.body);
+    const parsedParams = idSchema.safeParse({ id: req.params.id });
+    if (!parsedParams.success) {
+      res.status(400).json({
+        message: "Bad Request - invalid id",
+        errors: parsedParams.error.message,
+      });
+      return;
+    }
+    const { id } = parsedParams.data;
+    const parsedBody = updateCardVisibilitySchema.safeParse({
+      visibility: req.query.visibility,
+    });
     if (!parsedBody.success) {
       res.status(400).json({
-        message: "Bad Request - invalid parameters",
+        message: "Bad Request - invalid visibility",
         errors: parsedBody.error.message,
       });
       return;
     }
     const { visibility } = parsedBody.data;
-    const card = await cardsService.updateCardVisibility(
-      req.params.id,
-      visibility,
-    );
+    const card = await cardsService.updateCardVisibility(id, visibility);
     res.status(200).json({ data: card });
   } catch (error) {
     next(error);

@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
 import { Card } from "../models/Cards";
-import { validateCardId } from "../utils/id-validator";
-import { GetCardsInput } from "../types/cards.types";
+import { validateObjectId } from "../utils/id-validator";
+import type {
+  CreateCardInput,
+  GetCardsInput,
+  UpdateCardInput,
+} from "../types/cards.types";
+import { User } from "../models/Users";
 
 const DEFAULT_PAGE_SIZE = 20;
 const MAX_PAGE_SIZE = 100;
@@ -52,7 +57,7 @@ export async function getCards(
 }
 
 export async function getCardById(id: string) {
-  validateCardId(id);
+  validateObjectId(id);
   const card = await Card.findById(id).lean({ getters: true });
   if (!card) {
     const error = new Error("Card not found") as Error & {
@@ -64,7 +69,7 @@ export async function getCardById(id: string) {
   return card;
 }
 
-export async function createCard(body: Record<string, unknown>) {
+export async function createCard(body: CreateCardInput) {
   const {
     visibility,
     userId,
@@ -80,14 +85,7 @@ export async function createCard(body: Record<string, unknown>) {
     address,
     theme,
   } = body;
-  if (!userId || !name || !title || !visibility || !cardType) {
-    const error = new Error("userId, name and title are required") as Error & {
-      statusCode?: number;
-    };
-    error.statusCode = 400;
-    throw error;
-  }
-  validateCardId(userId as string);
+  validateObjectId(userId as string);
   const card = new Card({
     visibility,
     userId,
@@ -104,11 +102,12 @@ export async function createCard(body: Record<string, unknown>) {
     theme,
   });
   await card.save();
+  await User.findByIdAndUpdate(userId, { $inc: { cardCount: 1 } });
   return card.toObject();
 }
 
-export async function updateCard(id: string, body: Record<string, unknown>) {
-  validateCardId(id);
+export async function updateCard(id: string, body: UpdateCardInput) {
+  validateObjectId(id);
   const card = await Card.findByIdAndUpdate(
     id,
     { $set: body },
@@ -134,7 +133,7 @@ export async function updateCardVisibility(id: string, visibility: string) {
     error.statusCode = 400;
     throw error;
   }
-  validateCardId(id);
+  validateObjectId(id);
   const card = await Card.findByIdAndUpdate(
     id,
     { visibility },
@@ -153,8 +152,9 @@ export async function updateCardVisibility(id: string, visibility: string) {
 }
 
 export async function deleteCard(id: string) {
-  validateCardId(id);
+  validateObjectId(id);
   const card = await Card.findById(id);
+  const userId = card?.userId;
   if (!card) {
     const error = new Error("Card not found") as Error & {
       statusCode?: number;
@@ -163,5 +163,6 @@ export async function deleteCard(id: string) {
     throw error;
   }
   await card.deleteOne();
+  await User.findByIdAndUpdate(userId, { $inc: { cardCount: -1 } });
   return { message: "Card deleted successfully" };
 }

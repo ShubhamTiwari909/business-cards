@@ -23,7 +23,7 @@ router.get(
   cardsController.getById,
 );
 
-router.put(
+router.patch(
   "/update/visibility/:id",
   dynamicLimiter(20, { windowMs: 60 * 1000 }),
   cardsController.updateVisibility,

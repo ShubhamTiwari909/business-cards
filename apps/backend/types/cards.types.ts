@@ -58,7 +58,7 @@ export const createCardSchema = z.object({
   name: z.string().min(1).trim().max(50),
   title: z.string().min(1).max(100),
   company: companySchema.optional(),
-  email: z.array(z.string().toLowerCase()).optional(),
+  email: z.array(z.email().toLowerCase()).optional(),
   phone: z.array(z.string().trim()).optional(),
   bio: z.string().max(500).optional(),
   profileImage: profileImageSchema.optional(),
@@ -90,7 +90,7 @@ export type UpdateCardVisibilityInput = z.infer<
 
 export const getCardsSchema = z.object({
   userId: objectIdString.optional(),
-  limit: z.number().optional(),
+  limit: z.coerce.number().int().positive().optional(),
   cursor: objectIdString.optional(),
 });
 

@@ -1,10 +1,8 @@
 import { User } from "../models/Users";
 import type { Request, Response } from "express";
-import { validateCardId } from "../utils/id-validator";
 import { addUserSchema } from "../types/users.types";
 
 export async function checkIfUserExists(email: string) {
-  validateCardId(email);
   return await User.findOne({ email }).select("_id passkey").lean();
 }
 

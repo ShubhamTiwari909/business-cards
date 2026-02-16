@@ -121,17 +121,4 @@ const cardSchema = new mongoose.Schema(
 
 cardSchema.index({ userId: 1, createdAt: -1 });
 
-// Pre-save hook to update user's card count
-
-cardSchema.pre("save", async function () {
-  if (this.isNew) {
-    await User.findByIdAndUpdate(this.userId, { $inc: { cardCount: 1 } });
-  }
-});
-
-// Pre-deleteOne hook (document) to decrease card count when a card document is removed
-cardSchema.pre("deleteOne", { document: true }, async function () {
-  await User.findByIdAndUpdate(this.userId, { $inc: { cardCount: -1 } });
-});
-
 export const Card = mongoose.model("Card", cardSchema);
