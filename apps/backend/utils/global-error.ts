@@ -5,16 +5,18 @@ interface HttpError extends Error {
 
 export const globalErrorHandler = (
   err: HttpError,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ) => {
-  const statusCode = err.statusCode || 500;
+  const statusCode = err.statusCode ?? 500;
   const message =
     process.env.NODE_ENV === "production"
       ? "Internal Server Error"
       : err.message;
-  console.error(err.stack);
+  if (process.env.NODE_ENV !== "production" && err.stack) {
+    console.error(err.stack);
+  }
   res.status(statusCode).json({
     status: "error",
     statusCode,

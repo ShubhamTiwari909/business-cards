@@ -29,8 +29,7 @@ export const dynamicLimiter = (
       }
       return limit; // Default limit for regular users
     },
-    handler: (req, res) => {
-      console.error(`Rate limit exceeded for IP: ${req.ip}`);
+    handler: (_req, res) => {
       const retryAfter = formatWindowMs(windowMs);
       res.status(429).json({
         message: `Too many requests, please try again later after ${retryAfter}`,
