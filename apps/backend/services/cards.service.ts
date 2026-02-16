@@ -76,7 +76,7 @@ export async function createCard(body: CreateCardInput) {
   const { userId, ...cardData } = body;
 
   validateObjectId(userId as string);
-  const card = new Card(cardData);
+  const card = new Card({ ...cardData, userId });
   await card.save();
   await User.findByIdAndUpdate(userId, { $inc: { cardCount: 1 } });
   return card.toObject();
