@@ -65,15 +65,15 @@ const cardSchema = new mongoose.Schema(
         email: {
           type: String,
           trim: true,
-        }
-      }
+        },
+      },
     ],
     phones: [
       {
         phone: {
           type: String,
           trim: true,
-        }
+        },
       },
     ],
     bio: {

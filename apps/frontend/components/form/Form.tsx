@@ -123,7 +123,9 @@ const Form = () => {
     methods.setValue("profileImage.config.rounded", rounded);
   };
 
-  const handleBackgroundImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBackgroundImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
       methods.setValue("backgroundImage.url", URL.createObjectURL(file));
@@ -150,23 +152,21 @@ const Form = () => {
               label="Background"
               inputRef={backgroundImageInputRef}
             />
-            {
-              watchValues.backgroundImage?.url && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    methods.setValue("backgroundImage.url", "");
-                    if (backgroundImageInputRef.current) {
-                      backgroundImageInputRef.current.value = "";
-                    }
-                  }}
-                  aria-label="Clear background image"
-                  className="cursor-pointer"
-                >
-                  <MdClear size={20} className="text-slate-100" />
-                </button>
-              )
-            }
+            {watchValues.backgroundImage?.url && (
+              <button
+                type="button"
+                onClick={() => {
+                  methods.setValue("backgroundImage.url", "");
+                  if (backgroundImageInputRef.current) {
+                    backgroundImageInputRef.current.value = "";
+                  }
+                }}
+                aria-label="Clear background image"
+                className="cursor-pointer"
+              >
+                <MdClear size={20} className="text-slate-100" />
+              </button>
+            )}
           </div>
           <SelectField<CardSchemaInput>
             name="visibility"
@@ -195,24 +195,27 @@ const Form = () => {
               placeholder="Enter your company name"
             />
             <div className="flex items-center gap-2">
-              <UploadField id="company-logo-upload" handleUploadChange={handleCompanyLogoChange} label="Company Logo" inputRef={companyLogoInputRef} />
-              {
-                watchValues.company?.logo?.url && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      methods.setValue("company.logo.url", "");
-                      if (companyLogoInputRef.current) {
-                        companyLogoInputRef.current.value = "";
-                      }
-                    }}
-                    aria-label="Clear company logo"
-                    className="cursor-pointer"
-                  >
-                    <MdClear size={20} className="text-slate-100" />
-                  </button>
-                )
-              }
+              <UploadField
+                id="company-logo-upload"
+                handleUploadChange={handleCompanyLogoChange}
+                label="Company Logo"
+                inputRef={companyLogoInputRef}
+              />
+              {watchValues.company?.logo?.url && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    methods.setValue("company.logo.url", "");
+                    if (companyLogoInputRef.current) {
+                      companyLogoInputRef.current.value = "";
+                    }
+                  }}
+                  aria-label="Clear company logo"
+                  className="cursor-pointer"
+                >
+                  <MdClear size={20} className="text-slate-100" />
+                </button>
+              )}
             </div>
           </div>
           <ArrayField
@@ -252,26 +255,32 @@ const Form = () => {
           />
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <UploadField id="profile-image-upload" handleUploadChange={handleProfileImageChange} label="Profile Image" inputRef={profileImageInputRef} />
-              {
-                watchValues.profileImage?.url && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      methods.setValue("profileImage.url", "");
-                      if (profileImageInputRef.current) {
-                        profileImageInputRef.current.value = "";
-                      }
-                    }}
-                    aria-label="Clear profile image"
-                    className="cursor-pointer"
-                  >
-                    <MdClear size={20} className="text-slate-100" />
-                  </button>
-                )
-              }
+              <UploadField
+                id="profile-image-upload"
+                handleUploadChange={handleProfileImageChange}
+                label="Profile Image"
+                inputRef={profileImageInputRef}
+              />
+              {watchValues.profileImage?.url && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    methods.setValue("profileImage.url", "");
+                    if (profileImageInputRef.current) {
+                      profileImageInputRef.current.value = "";
+                    }
+                  }}
+                  aria-label="Clear profile image"
+                  className="cursor-pointer"
+                >
+                  <MdClear size={20} className="text-slate-100" />
+                </button>
+              )}
             </div>
-            <Checkbox label="Rounded Image" onChange={handleRoundedImageChange} />
+            <Checkbox
+              label="Rounded Image"
+              onChange={handleRoundedImageChange}
+            />
           </div>
           <ArrayField
             fields={socialLinkFields}

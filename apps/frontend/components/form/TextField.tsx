@@ -5,7 +5,8 @@ type Props<T extends FieldValues> = {
   name: Path<T>;
   label: string;
   as?: "input" | "textarea";
-} & React.InputHTMLAttributes<HTMLInputElement> & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+} & React.InputHTMLAttributes<HTMLInputElement> &
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 const inputId = (name: Path<FieldValues>) =>
   `field-${String(name).replace(/\./g, "-")}`;
@@ -25,7 +26,9 @@ export function TextField<T extends FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <div className={`flex flex-col gap-1.5 md:flex-row md:items-center md:gap-4 w-full ${className ?? ""}`.trim()}>
+        <div
+          className={`flex flex-col gap-1.5 md:flex-row md:items-center md:gap-4 w-full ${className ?? ""}`.trim()}
+        >
           {label && (
             <label
               htmlFor={inputId(name)}
@@ -47,7 +50,6 @@ export function TextField<T extends FieldValues>({
               </p>
             )}
           </div>
-
         </div>
       )}
     />

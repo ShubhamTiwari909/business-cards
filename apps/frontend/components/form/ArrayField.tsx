@@ -32,7 +32,13 @@ function ArrayField({
         {fields.map((field, index) => (
           <div key={field.id} className="mb-10 last-of-type:mb-5">
             <div className="flex gap-2">
-              <div className={cn(input.length > 1 && "space-y-8 p-8 border border-gray-700 rounded-lg", "w-full")}>
+              <div
+                className={cn(
+                  input.length > 1 &&
+                    "space-y-8 p-8 border border-gray-700 rounded-lg",
+                  "w-full",
+                )}
+              >
                 {input.map((item) => (
                   <TextField<CardSchemaInput>
                     key={item.name}

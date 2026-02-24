@@ -28,7 +28,7 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
     <article
       className={cn(
         "relative w-full max-w-xl overflow-hidden rounded-2xl shadow-lg transition-shadow duration-200 hover:shadow-xl",
-        themesMapping.cardBg.bg
+        themesMapping.cardBg.bg,
       )}
       data-theme={theme}
     >
@@ -55,8 +55,10 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
                 alt=""
                 className={cn(
                   "shrink-0 rounded-xl object-cover shadow-md border size-18",
-                  backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-                  profileImage.config?.rounded ? "rounded-full" : "rounded-xl"
+                  backgroundImage?.url
+                    ? themesMapping.border.white
+                    : themesMapping.border[100],
+                  profileImage.config?.rounded ? "rounded-full" : "rounded-xl",
                 )}
               />
               {cardType && (
@@ -64,7 +66,7 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
                   className={cn(
                     "mt-2 inline-block rounded-full py-0.5 text-xs font-medium",
                     themesMapping.bg[100],
-                    themesMapping.text[700]
+                    themesMapping.text[700],
                   )}
                 >
                   {cardType}
@@ -75,7 +77,7 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
             <div
               className={cn(
                 "flex size-20 shrink-0 items-center justify-center rounded-xl text-2xl font-semibold text-white shadow-md sm:size-24",
-                themesMapping.bg[600]
+                themesMapping.bg[600],
               )}
             >
               {name?.charAt(0)?.toUpperCase() ?? "?"}
@@ -85,7 +87,9 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
             <h1
               className={cn(
                 "text-xl font-bold tracking-tight sm:text-2xl",
-                backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+                backgroundImage?.url
+                  ? themesMapping.text.white
+                  : themesMapping.text[800],
               )}
             >
               {name}
@@ -93,7 +97,9 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
             <p
               className={cn(
                 "mt-1 text-sm font-semibold",
-                backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700]
+                backgroundImage?.url
+                  ? themesMapping.text.white
+                  : themesMapping.text[700],
               )}
             >
               {title}
@@ -110,13 +116,17 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
                   />
                 ) : null}
                 <span
-                  className={cn("text-sm font-medium", backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700])}
+                  className={cn(
+                    "text-sm font-medium",
+                    backgroundImage?.url
+                      ? themesMapping.text.white
+                      : themesMapping.text[700],
+                  )}
                 >
                   {company.name}
                 </span>
               </div>
             )}
-
           </div>
         </header>
 
@@ -124,8 +134,12 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
           <p
             className={cn(
               "mt-6 border-t pt-6 text-sm leading-relaxed",
-              backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-              backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+              backgroundImage?.url
+                ? themesMapping.border.white
+                : themesMapping.border[100],
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[800],
             )}
           >
             {bio}
@@ -141,13 +155,15 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
                   href={`mailto:${item.email}`}
                   className={cn(
                     "flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-80",
-                    backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700]
+                    backgroundImage?.url
+                      ? themesMapping.text.white
+                      : themesMapping.text[700],
                   )}
                 >
                   <Mail className={iconClass} />
                   <span className="break-all">{item.email}</span>
                 </a>
-              )
+              ),
           )}
           {phones?.map(
             (item, i) =>
@@ -157,13 +173,15 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
                   href={`tel:${item.phone.replace(/\s/g, "")}`}
                   className={cn(
                     "flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-80",
-                    backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700]
+                    backgroundImage?.url
+                      ? themesMapping.text.white
+                      : themesMapping.text[700],
                   )}
                 >
                   <Phone className={iconClass} />
                   <span>{item.phone}</span>
                 </a>
-              )
+              ),
           )}
         </div>
 
@@ -171,7 +189,9 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
           <p
             className={cn(
               "mt-4 flex items-start gap-2 text-sm",
-              backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[800],
             )}
           >
             <MapPin className={cn("shrink-0 mt-0.5", iconClass)} />
@@ -191,15 +211,19 @@ const Marketing = ({ card }: { card: CardSchemaInput }) => {
                     rel="noopener noreferrer"
                     className={cn(
                       "inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 text-sm font-medium transition-colors hover:opacity-90",
-                      backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-                      backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+                      backgroundImage?.url
+                        ? themesMapping.border.white
+                        : themesMapping.border[100],
+                      backgroundImage?.url
+                        ? themesMapping.text.white
+                        : themesMapping.text[800],
                     )}
                     title={link.label ?? link.platform}
                   >
                     <Link2 className="size-3.5" />
                     {link.label ?? link.platform}
                   </a>
-                )
+                ),
             )}
           </div>
         )}

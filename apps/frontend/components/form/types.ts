@@ -18,7 +18,10 @@ const cardTypeEnum = z.enum([
 ]);
 
 const companySchema = z.object({
-  name: z.string().max(100, { message: "Company name must be less than 100 characters" }).optional(),
+  name: z
+    .string()
+    .max(100, { message: "Company name must be less than 100 characters" })
+    .optional(),
   logo: z
     .object({
       url: z.string().optional(),
@@ -45,27 +48,56 @@ const socialLinkSchema = z.object({
 });
 
 export const cardSchema = z.object({
-  backgroundImage: z.object({
-    url: z.string().optional(),
-  }).optional(),
+  backgroundImage: z
+    .object({
+      url: z.string().optional(),
+    })
+    .optional(),
   visibility: cardVisibility.default("private"),
   userId: objectIdString,
-  variant: z.enum(["minimal", "modern", "engineer", "marketing", "ceo", "company"]).default("minimal"),
+  variant: z
+    .enum(["minimal", "modern", "engineer", "marketing", "ceo", "company"])
+    .default("minimal"),
   cardType: cardTypeEnum.default("business"),
-  name: z.string().min(1, { message: "Name is required" }).trim().max(50, { message: "Name must be less than 50 characters" }),
-  title: z.string().min(1, { message: "Title is required" }).max(100, { message: "Title must be less than 100 characters" }),
+  name: z
+    .string()
+    .min(1, { message: "Name is required" })
+    .trim()
+    .max(50, { message: "Name must be less than 50 characters" }),
+  title: z
+    .string()
+    .min(1, { message: "Title is required" })
+    .max(100, { message: "Title must be less than 100 characters" }),
   company: companySchema.optional(),
   emails: z
-    .array(z.object({
-      email: z.email().min(1, { message: "Email is required" }).max(100, { message: "Email must be less than 100 characters" }).transform((email) => email.toLowerCase())
-    }))
+    .array(
+      z.object({
+        email: z
+          .email()
+          .min(1, { message: "Email is required" })
+          .max(100, { message: "Email must be less than 100 characters" })
+          .transform((email) => email.toLowerCase()),
+      }),
+    )
     .max(3, { message: "Maximum 3 emails allowed" })
     .optional(),
-  phones: z.array(z.object({ phone: z.string().trim() })).max(3, { message: "Maximum 3 phone numbers allowed" }).optional(),
-  bio: z.string().max(500, { message: "Bio must be less than 500 characters" }).optional(),
+  phones: z
+    .array(z.object({ phone: z.string().trim() }))
+    .max(3, { message: "Maximum 3 phone numbers allowed" })
+    .optional(),
+  bio: z
+    .string()
+    .max(500, { message: "Bio must be less than 500 characters" })
+    .optional(),
   profileImage: profileImageSchema.optional(),
-  socialLinks: z.array(socialLinkSchema).max(8, { message: "Maximum 8 social links allowed" }).optional(),
-  address: z.string().max(200, { message: "Address must be less than 200 characters" }).optional(),
+  socialLinks: z
+    .array(socialLinkSchema)
+    .max(8, { message: "Maximum 8 social links allowed" })
+    .optional(),
+  address: z
+    .string()
+    .max(200, { message: "Address must be less than 200 characters" })
+    .optional(),
   theme: z
     .enum([
       "slate",
@@ -118,7 +150,6 @@ export const getCardsSchema = z.object({
 });
 
 export type GetCardsInput = z.infer<typeof getCardsSchema>;
-
 
 export const defaultValues: CardSchemaInput = {
   backgroundImage: {

@@ -28,7 +28,7 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
     <article
       className={cn(
         "relative flex w-full max-w-2xl overflow-hidden rounded-2xl shadow-xl transition-shadow hover:shadow-2xl hover:shadow-black/15",
-        themesMapping.cardBg.bg
+        themesMapping.cardBg.bg,
       )}
       data-theme={theme}
     >
@@ -47,14 +47,14 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
       <div
         className={cn(
           "relative z-10 flex w-36 shrink-0 flex-col justify-between items-center gap-4 rounded-l-2xl p-5 sm:w-40",
-          themesMapping.accent
+          themesMapping.accent,
         )}
       >
         <div>
           {cardType && (
             <span
               className={cn(
-                "w-fit rounded-full px-2.5 py-0.5 text-[10px] font-medium text-white/90"
+                "w-fit rounded-full px-2.5 py-0.5 text-[10px] font-medium text-white/90",
               )}
             >
               {cardType.toUpperCase()}
@@ -68,7 +68,7 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
               alt="Profile"
               className={cn(
                 "rounded-lg object-cover shadow-md size-20 border-2 border-white/30",
-                profileImage.config?.rounded ? "rounded-full" : "rounded-lg"
+                profileImage.config?.rounded ? "rounded-full" : "rounded-lg",
               )}
             />
           ) : (
@@ -91,7 +91,9 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
           <p
             className={cn(
               "mb-3 flex items-center gap-2 text-sm",
-              backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[800],
             )}
           >
             {company.logo?.url ? (
@@ -111,8 +113,12 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
           <p
             className={cn(
               "mb-4 border-b pb-4 text-sm leading-relaxed",
-              backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-              backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+              backgroundImage?.url
+                ? themesMapping.border.white
+                : themesMapping.border[100],
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[800],
             )}
           >
             {bio}
@@ -120,7 +126,14 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
         )}
 
         {emails && emails.length > 0 && (
-          <ul className={cn("flex flex-wrap gap-5", backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700])}>
+          <ul
+            className={cn(
+              "flex flex-wrap gap-5",
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[700],
+            )}
+          >
             {emails.map((item, i) => (
               <li key={i}>
                 {item.email ? (
@@ -129,12 +142,12 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
                     className="flex items-center gap-2 rounded py-1.5 text-sm transition-colors hover:opacity-80"
                   >
                     <Mail className={iconClass} />
-                    <span >{item.email}</span>
+                    <span>{item.email}</span>
                   </a>
                 ) : (
                   <span className="flex items-center gap-2 py-1.5 text-sm">
                     <Mail className={iconClass} />
-                    <span >{item?.email ?? ""}</span>
+                    <span>{item?.email ?? ""}</span>
                   </span>
                 )}
               </li>
@@ -143,7 +156,14 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
         )}
 
         {phones && phones.length > 0 && (
-          <ul className={cn("mt-1 flex flex-wrap gap-5", backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700])}>
+          <ul
+            className={cn(
+              "mt-1 flex flex-wrap gap-5",
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[700],
+            )}
+          >
             {phones.map((item, i) => (
               <li key={i}>
                 {item.phone ? (
@@ -152,12 +172,12 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
                     className="flex items-center gap-2 rounded py-1.5 text-sm transition-colors hover:opacity-80"
                   >
                     <Phone className={iconClass} />
-                    <span >{item.phone}</span>
+                    <span>{item.phone}</span>
                   </a>
                 ) : (
                   <span className="flex items-center gap-2 py-1.5 text-sm">
                     <Phone className={iconClass} />
-                    <span >{item?.phone ?? ""}</span>
+                    <span>{item?.phone ?? ""}</span>
                   </span>
                 )}
               </li>
@@ -169,8 +189,12 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
           <p
             className={cn(
               "mt-5 border-t pt-5 flex items-start gap-2 text-sm",
-              backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-              backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+              backgroundImage?.url
+                ? themesMapping.border.white
+                : themesMapping.border[100],
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[800],
             )}
           >
             <MapPin className={iconClass} />
@@ -190,15 +214,19 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
                     rel="noopener noreferrer"
                     className={cn(
                       "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors border border-gray-700",
-                      backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-                      backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+                      backgroundImage?.url
+                        ? themesMapping.border.white
+                        : themesMapping.border[100],
+                      backgroundImage?.url
+                        ? themesMapping.text.white
+                        : themesMapping.text[800],
                     )}
                     title={link.label ?? link.platform}
                   >
                     <Link2 className="size-3" />
                     {link.label ?? link.platform}
                   </a>
-                )
+                ),
             )}
           </div>
         )}

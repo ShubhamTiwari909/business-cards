@@ -29,7 +29,7 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
       className={cn(
         "relative w-full max-w-xl overflow-hidden rounded-2xl border shadow-lg transition-shadow duration-200 hover:shadow-xl",
         themesMapping.cardBg.bg,
-        themesMapping.border[100]
+        themesMapping.border[100],
       )}
       data-theme={theme}
     >
@@ -48,7 +48,9 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
         <div
           className={cn(
             "relative flex items-center justify-center gap-3 border-b px-6 py-5",
-            backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100]
+            backgroundImage?.url
+              ? themesMapping.border.white
+              : themesMapping.border[100],
           )}
         >
           {company?.logo?.url ? (
@@ -64,7 +66,9 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
             <h2
               className={cn(
                 "text-lg font-semibold tracking-tight",
-                backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+                backgroundImage?.url
+                  ? themesMapping.text.white
+                  : themesMapping.text[800],
               )}
             >
               {company.name}
@@ -83,15 +87,17 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
               alt=""
               className={cn(
                 "shrink-0 rounded-lg object-cover border size-16",
-                backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-                profileImage.config?.rounded ? "rounded-full" : "rounded-lg"
+                backgroundImage?.url
+                  ? themesMapping.border.white
+                  : themesMapping.border[100],
+                profileImage.config?.rounded ? "rounded-full" : "rounded-lg",
               )}
             />
           ) : (
             <div
               className={cn(
                 "flex size-16 shrink-0 items-center justify-center rounded-lg text-lg font-semibold text-white",
-                themesMapping.bg[600]
+                themesMapping.bg[600],
               )}
             >
               {name?.charAt(0)?.toUpperCase() ?? "?"}
@@ -101,7 +107,9 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
             <h1
               className={cn(
                 "font-semibold text-lg",
-                backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+                backgroundImage?.url
+                  ? themesMapping.text.white
+                  : themesMapping.text[800],
               )}
             >
               {name}
@@ -109,7 +117,9 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
             <p
               className={cn(
                 "mt-0.5 text-sm",
-                backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700]
+                backgroundImage?.url
+                  ? themesMapping.text.white
+                  : themesMapping.text[700],
               )}
             >
               {title}
@@ -119,7 +129,7 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
                 className={cn(
                   "mt-1.5 inline-block rounded py-0.5 text-xs font-medium",
                   themesMapping.bg[100],
-                  themesMapping.text[700]
+                  themesMapping.text[700],
                 )}
               >
                 {cardType}
@@ -132,8 +142,12 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
           <p
             className={cn(
               "mt-5 border-t pt-5 text-sm leading-relaxed",
-              backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-              backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+              backgroundImage?.url
+                ? themesMapping.border.white
+                : themesMapping.border[100],
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[800],
             )}
           >
             {bio}
@@ -149,13 +163,15 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
                   href={`mailto:${item.email}`}
                   className={cn(
                     "inline-flex items-center gap-2 rounded py-1.5 text-sm transition-colors hover:opacity-80 shrink-0",
-                    backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700]
+                    backgroundImage?.url
+                      ? themesMapping.text.white
+                      : themesMapping.text[700],
                   )}
                 >
                   <Mail className={iconClass} />
                   <span className="break-all">{item.email}</span>
                 </a>
-              )
+              ),
           )}
           {phones?.map(
             (item, i) =>
@@ -165,13 +181,15 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
                   href={`tel:${item.phone.replace(/\s/g, "")}`}
                   className={cn(
                     "inline-flex items-center gap-2 rounded py-1.5 text-sm transition-colors hover:opacity-80 shrink-0",
-                    backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700]
+                    backgroundImage?.url
+                      ? themesMapping.text.white
+                      : themesMapping.text[700],
                   )}
                 >
                   <Phone className={iconClass} />
                   <span>{item.phone}</span>
                 </a>
-              )
+              ),
           )}
         </div>
 
@@ -179,8 +197,12 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
           <p
             className={cn(
               "mt-4 flex items-start gap-2 border-t pt-4 text-sm",
-              backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-              backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+              backgroundImage?.url
+                ? themesMapping.border.white
+                : themesMapping.border[100],
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[800],
             )}
           >
             <MapPin className={cn("shrink-0 mt-0.5", iconClass)} />
@@ -200,15 +222,19 @@ const Company = ({ card }: { card: CardSchemaInput }) => {
                     rel="noopener noreferrer"
                     className={cn(
                       "inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-medium transition-colors hover:opacity-80",
-                      backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-                      backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+                      backgroundImage?.url
+                        ? themesMapping.border.white
+                        : themesMapping.border[100],
+                      backgroundImage?.url
+                        ? themesMapping.text.white
+                        : themesMapping.text[800],
                     )}
                     title={link.label ?? link.platform}
                   >
                     <Link2 className="size-3" />
                     {link.label ?? link.platform}
                   </a>
-                )
+                ),
             )}
           </div>
         )}

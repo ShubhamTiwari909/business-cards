@@ -28,7 +28,7 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
     <article
       className={cn(
         "relative w-full max-w-lg overflow-hidden rounded-2xl shadow-md transition-shadow duration-200 hover:shadow-lg",
-        themesMapping.cardBg.bg
+        themesMapping.cardBg.bg,
       )}
       data-theme={theme}
     >
@@ -59,7 +59,9 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
               <span
                 className={cn(
                   "text-sm font-medium tracking-wide",
-                  backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700]
+                  backgroundImage?.url
+                    ? themesMapping.text.white
+                    : themesMapping.text[700],
                 )}
               >
                 {company.name}
@@ -74,15 +76,17 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
               alt=""
               className={cn(
                 "rounded-full object-cover border-2 shadow-sm size-24",
-                backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-                profileImage.config?.rounded ? "rounded-full" : "rounded-xl"
+                backgroundImage?.url
+                  ? themesMapping.border.white
+                  : themesMapping.border[100],
+                profileImage.config?.rounded ? "rounded-full" : "rounded-xl",
               )}
             />
           ) : (
             <div
               className={cn(
                 "flex size-20 shrink-0 items-center justify-center rounded-full text-2xl font-semibold text-white sm:size-24 sm:text-3xl",
-                themesMapping.bg[600]
+                themesMapping.bg[600],
               )}
             >
               {name?.charAt(0)?.toUpperCase() ?? "?"}
@@ -91,7 +95,9 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
           <h1
             className={cn(
               "mt-6 text-2xl font-semibold tracking-tight sm:text-3xl",
-              backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[800],
             )}
           >
             {name}
@@ -99,7 +105,9 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
           <p
             className={cn(
               "mt-1 text-sm font-medium",
-              backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700]
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[700],
             )}
           >
             {title}
@@ -109,7 +117,7 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
               className={cn(
                 "mt-2 inline-block rounded px-2 py-0.5 text-xs font-medium",
                 themesMapping.bg[100],
-                themesMapping.text[700]
+                themesMapping.text[700],
               )}
             >
               {cardType}
@@ -121,8 +129,12 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
           <p
             className={cn(
               "mx-auto mt-5 max-w-md border-t pt-5 text-center text-sm leading-relaxed",
-              backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-              backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+              backgroundImage?.url
+                ? themesMapping.border.white
+                : themesMapping.border[100],
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[800],
             )}
           >
             {bio}
@@ -132,7 +144,9 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
         <div
           className={cn(
             "mt-5 flex flex-wrap justify-center items-center gap-x-4 gap-y-2 border-t pt-5 text-sm",
-            backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100]
+            backgroundImage?.url
+              ? themesMapping.border.white
+              : themesMapping.border[100],
           )}
         >
           {emails?.map(
@@ -143,13 +157,15 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
                   href={`mailto:${item.email}`}
                   className={cn(
                     "inline-flex items-center gap-2 transition-colors hover:opacity-80 shrink-0",
-                    backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700]
+                    backgroundImage?.url
+                      ? themesMapping.text.white
+                      : themesMapping.text[700],
                   )}
                 >
                   <Mail className={iconClass} />
                   <span className="break-all">{item.email}</span>
                 </a>
-              )
+              ),
           )}
           {phones?.map(
             (item, i) =>
@@ -159,13 +175,15 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
                   href={`tel:${item.phone.replace(/\s/g, "")}`}
                   className={cn(
                     "inline-flex items-center gap-2 transition-colors hover:opacity-80 shrink-0",
-                    backgroundImage?.url ? themesMapping.text.white : themesMapping.text[700]
+                    backgroundImage?.url
+                      ? themesMapping.text.white
+                      : themesMapping.text[700],
                   )}
                 >
                   <Phone className={iconClass} />
                   <span>{item.phone}</span>
                 </a>
-              )
+              ),
           )}
         </div>
 
@@ -173,7 +191,9 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
           <p
             className={cn(
               "mt-4 flex items-center justify-center gap-2 text-sm",
-              backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+              backgroundImage?.url
+                ? themesMapping.text.white
+                : themesMapping.text[800],
             )}
           >
             <MapPin className={iconClass} />
@@ -193,15 +213,19 @@ const CEO = ({ card }: { card: CardSchemaInput }) => {
                     rel="noopener noreferrer"
                     className={cn(
                       "inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-medium transition-colors hover:opacity-80",
-                      backgroundImage?.url ? themesMapping.border.white : themesMapping.border[100],
-                      backgroundImage?.url ? themesMapping.text.white : themesMapping.text[800]
+                      backgroundImage?.url
+                        ? themesMapping.border.white
+                        : themesMapping.border[100],
+                      backgroundImage?.url
+                        ? themesMapping.text.white
+                        : themesMapping.text[800],
                     )}
                     title={link.label ?? link.platform}
                   >
                     <Link2 className="size-3" />
                     {link.label ?? link.platform}
                   </a>
-                )
+                ),
             )}
           </div>
         )}
