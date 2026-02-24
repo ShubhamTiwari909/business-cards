@@ -12,7 +12,13 @@ export const dbConnection = async () => {
     await mongoose.connect(mongoUri);
     console.log("Connected to MongoDB");
   } catch (error) {
-    console.error("Error connecting to MongoDB");
+    console.error(
+      "Error connecting to MongoDB:",
+      error instanceof Error ? error.message : error,
+    );
+    if (error instanceof Error) {
+      console.error("Cause:", error.message);
+    }
     process.exit(1);
   }
 };

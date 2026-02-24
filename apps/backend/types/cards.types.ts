@@ -45,6 +45,11 @@ const socialLinkSchema = z.object({
 });
 
 export const createCardSchema = z.object({
+  backgroundImage: z
+    .object({
+      url: z.string().optional(),
+    })
+    .optional(),
   visibility: cardVisibility.default("private"),
   userId: objectIdString,
   variant: z
