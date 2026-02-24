@@ -139,6 +139,10 @@ export const updateCardVisibilitySchema = z.object({
 });
 
 export type CardSchemaInput = z.input<typeof cardSchema>;
+
+/** Backend card response shape: form card fields plus MongoDB _id */
+export type BackendCard = CardSchemaInput & { _id: string };
+
 export type UpdateCardInput = z.infer<typeof updateCardSchema>;
 export type UpdateCardVisibilityInput = z.infer<
   typeof updateCardVisibilitySchema

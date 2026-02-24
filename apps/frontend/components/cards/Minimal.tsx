@@ -76,7 +76,6 @@ const Minimal = ({ card }: { card: CardSchemaInput }) => {
               <h1
                 className={cn(
                   "text-xl font-bold tracking-tight sm:text-2xl",
-                  themesMapping.bg[900],
                   backgroundImage?.url
                     ? themesMapping.text.white
                     : themesMapping.text[800],
@@ -87,7 +86,6 @@ const Minimal = ({ card }: { card: CardSchemaInput }) => {
               <p
                 className={cn(
                   "mt-0.5 text-sm font-medium",
-                  themesMapping.bg[700],
                   backgroundImage?.url
                     ? themesMapping.text.white
                     : themesMapping.text[800],

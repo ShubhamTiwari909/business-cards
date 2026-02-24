@@ -1,7 +1,9 @@
 "use client";
-import { useRef } from "react";
+
+import { useEffect, useRef } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { CardSchemaInput, cardSchema, defaultValues } from "./types";
 import { TextField } from "./TextField";
 import { SelectField } from "./SelectField";
@@ -15,6 +17,14 @@ import Marketing from "../cards/Marketing";
 import CEO from "../cards/CEO";
 import Company from "../cards/Company";
 import { MdClear } from "react-icons/md";
+import {
+  createCard,
+  getCardById,
+  updateCard,
+  type CreateCardPayload,
+} from "@/lib/cards-api";
+import { backendCardToFormDefaults } from "@/lib/transform-card";
+import { Button } from "@/components/ui/button";
 
 const cardVisibilityOptions = [
   { value: "public", label: "Public" },
@@ -64,12 +74,116 @@ const cardVariantOptions = [
   { value: "company", label: "Company" },
 ];
 
-const Form = () => {
+const DEFAULT_USER_ID = process.env.NEXT_PUBLIC_API_USER_ID ?? "abcdabcdabcdabcdabcdabcd";
+
+type FormProps = {
+  editingCardId?: string | null;
+};
+
+const Form = ({ editingCardId = null }: FormProps) => {
   const methods = useForm<CardSchemaInput>({
     mode: "all",
     resolver: zodResolver(cardSchema),
     defaultValues,
   });
+  const isEditMode = Boolean(editingCardId);
+
+  const {
+    data: cardData,
+    isSuccess: cardLoaded,
+    isFetching: cardFetching,
+    isError: cardFetchError,
+  } = useQuery({
+    queryKey: ["card", editingCardId],
+    queryFn: () => getCardById(editingCardId!),
+    enabled: isEditMode && Boolean(editingCardId),
+  });
+
+  useEffect(() => {
+    if (cardLoaded && cardData) {
+      methods.reset(backendCardToFormDefaults(cardData));
+    }
+  }, [cardLoaded, cardData, methods]);
+
+  const createMutation = useMutation({
+    mutationFn: (payload: CreateCardPayload) => createCard(payload),
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, payload }: { id: string; payload: CreateCardPayload }) =>
+      updateCard(id, payload),
+  });
+
+  const isPending =
+    createMutation.isPending || updateMutation.isPending;
+  const submissionError =
+    createMutation.error ?? updateMutation.error;
+  const errorMessage =
+    submissionError instanceof Error
+      ? submissionError.message
+      : typeof submissionError === "string"
+        ? submissionError
+        : "Something went wrong. Please try again.";
+
+  const onSubmit = (values: CardSchemaInput) => {
+    const {
+      backgroundImage,
+      visibility,
+      variant,
+      cardType,
+      name,
+      title,
+      company,
+      emails,
+      phones,
+      bio,
+      profileImage,
+      socialLinks,
+      address,
+      theme,
+    } = values;
+
+    if (isEditMode && editingCardId) {
+      updateMutation.mutate({
+        id: editingCardId,
+        payload: {
+          userId: DEFAULT_USER_ID,
+          backgroundImage,
+          visibility,
+          variant,
+          cardType,
+          name,
+          title,
+          company,
+          emails,
+          phones,
+          bio,
+          profileImage,
+          socialLinks,
+          address,
+          theme,
+        },
+      });
+    } else {
+      createMutation.mutate({
+        userId: DEFAULT_USER_ID,
+        visibility,
+        variant,
+        cardType,
+        name,
+        title,
+        company,
+        emails,
+        phones,
+        bio,
+        profileImage,
+        socialLinks,
+        address,
+        theme,
+      });
+    }
+  };
+
   const {
     append: appendEmail,
     fields: emailFields,
@@ -141,10 +255,57 @@ const Form = () => {
     company: <Company card={watchValues} />,
   };
 
+  if (isEditMode && cardFetching) {
+    return (
+      <div className="grid grid-cols-1 justify-between gap-10 md:grid-cols-2 place-items-center min-h-[40vh]">
+        <p className="text-white">Loading card…</p>
+      </div>
+    );
+  }
+
+  if (isEditMode && cardFetchError) {
+    return (
+      <div className="grid grid-cols-1 justify-between gap-10 md:grid-cols-2 place-items-center min-h-[40vh]">
+        <div className="rounded-lg border border-red-500/50 bg-zinc-900 p-6 text-center">
+          <p className="text-red-400">Failed to load card. It may not exist or the request failed.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="grid grid-cols-1 justify-between gap-10 md:grid-cols-2">
+    <div className="grid grid-cols-1 justify-between gap-10 md:grid-cols-2 relative">
+      {(createMutation.isError || updateMutation.isError) && submissionError && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          role="alert"
+          aria-live="assertive"
+        >
+          <div className="max-w-md rounded-lg border border-red-500/50 bg-zinc-900 p-6 text-center shadow-xl">
+            <p className="text-lg font-medium text-red-400">
+              {errorMessage}
+            </p>
+            <Button
+              type="button"
+              variant="outline"
+              className="mt-4"
+              onClick={() => {
+                createMutation.reset();
+                updateMutation.reset();
+              }}
+            >
+              Dismiss
+            </Button>
+          </div>
+        </div>
+      )}
       <div className="space-y-10 border border-gray-700 rounded-lg p-5 text-white">
         <FormProvider {...methods}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="space-y-10"
+            noValidate
+          >
           <div className="flex items-center gap-2">
             <UploadField
               id="background-image-upload"
@@ -323,6 +484,20 @@ const Form = () => {
             options={cardVariantOptions}
             className="fixed top-40 right-5"
           />
+            <div className="pt-4">
+              <Button
+                type="submit"
+                disabled={isPending}
+                data-testid={isEditMode ? "update-card-button" : "save-card-button"}
+              >
+                {isPending
+                  ? "Saving…"
+                  : isEditMode
+                    ? "Update"
+                    : "Save"}
+              </Button>
+            </div>
+          </form>
         </FormProvider>
       </div>
       <div className="sticky top-20 h-[calc(80vh)] grid place-items-center pt-24">
