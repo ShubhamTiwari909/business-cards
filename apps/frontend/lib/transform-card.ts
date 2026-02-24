@@ -24,11 +24,11 @@ export function backendCardToFormDefaults(card: BackendCard): CardSchemaInput {
     emails:
       Array.isArray(card.emails) && card.emails.length > 0
         ? card.emails.map((e) => ({ email: e.email ?? "" }))
-        : [{ email: "" }],
+        : [],
     phones:
       Array.isArray(card.phones) && card.phones.length > 0
         ? card.phones.map((p) => ({ phone: p.phone ?? "" }))
-        : [{ phone: "" }],
+        : [],
     bio: card.bio ?? "",
     profileImage: card.profileImage
       ? {
@@ -63,7 +63,7 @@ export function backendCardToFormDefaults(card: BackendCard): CardSchemaInput {
             label: s.label ?? "",
             url: s.url ?? "",
           }))
-        : [{ platform: "", label: "", url: "" }],
+        : [],
     address: card.address ?? "",
     theme: (card.theme as CardSchemaInput["theme"]) ?? "slate",
   };

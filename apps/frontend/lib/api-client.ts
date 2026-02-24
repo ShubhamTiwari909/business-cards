@@ -8,11 +8,11 @@ export async function apiRequest<T>(
   options: RequestInit = {},
 ): Promise<{ data: T; status: number }> {
   const res = await fetch(url, {
+    ...options,
     headers: {
       "Content-Type": "application/json",
       ...options.headers,
     },
-    ...options,
   });
   const text = await res.text();
   let data: unknown;
@@ -23,14 +23,16 @@ export async function apiRequest<T>(
   }
   if (!res.ok) {
     const err = data as { message?: string; errors?: string | string[] } | null;
-    const message =
-      err && typeof err.message === "string"
-        ? err.message
-        : err && typeof err.errors === "string"
-          ? err.errors
-          : err && Array.isArray(err.errors)
-            ? (err.errors as string[]).join(", ")
-            : `Request failed (${res.status})`;
+    let message: string;
+    if (err && typeof err.message === "string") {
+      message = err.message;
+    } else if (err && typeof err.errors === "string") {
+      message = err.errors;
+    } else if (err && Array.isArray(err.errors)) {
+      message = (err.errors as string[]).join(", ");
+    } else {
+      message = `Request failed (${res.status})`;
+    }
     throw new Error(message);
   }
   return { data: data as T, status: res.status };

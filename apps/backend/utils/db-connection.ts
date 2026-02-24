@@ -16,8 +16,8 @@ export const dbConnection = async () => {
       "Error connecting to MongoDB:",
       error instanceof Error ? error.message : error,
     );
-    if (error instanceof Error && error.cause) {
-      console.error("Cause:", error.cause);
+    if (error instanceof Error) {
+      console.error("Cause:", error.message);
     }
     process.exit(1);
   }

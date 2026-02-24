@@ -1,9 +1,8 @@
 import { cardsApiBaseUrl, apiRequest } from "./api-client";
 import type { BackendCard, CardSchemaInput } from "@/components/form/types";
 
-export type CreateCardPayload = Omit<CardSchemaInput, "backgroundImage"> & {
+export type CreateCardPayload = CardSchemaInput & {
   userId: string;
-  backgroundImage?: { url?: string };
 };
 
 export async function getCardById(id: string): Promise<BackendCard> {
