@@ -28,10 +28,9 @@ const companySchema = z.object({
 
 const profileImageConfigSchema = z.object({
   size: z.number().optional(),
-  width: z.number().optional(),
-  height: z.number().optional(),
   fileType: z.string().optional(),
   fileName: z.string().optional(),
+  rounded: z.boolean().optional(),
 });
 
 const profileImageSchema = z.object({
@@ -43,31 +42,50 @@ const socialLinkSchema = z.object({
   platform: z.string().min(1),
   label: z.string().optional(),
   url: z.string().min(1),
-  icon: z.string().optional(),
-});
-
-const themeSchema = z.object({
-  primaryColor: z.string().default("#3B82F6"),
-  backgroundColor: z.string().default("#FFFFFF"),
 });
 
 export const createCardSchema = z.object({
   visibility: cardVisibility.default("private"),
   userId: objectIdString,
+  variant: z.enum(["minimal", "modern", "engineer", "marketing", "ceo", "company"]).default("minimal"),
   cardType: cardTypeEnum.default("business"),
   name: z.string().min(1).trim().max(50),
   title: z.string().min(1).max(100),
   company: companySchema.optional(),
-  email: z
-    .array(z.email().transform((email) => email.toLowerCase()))
+  emails: z
+    .array(z.object({
+      email: z.email().transform((email) => email.toLowerCase())
+    }))
+    .max(3, { message: "Maximum 3 emails allowed" })
     .optional(),
-  phone: z.array(z.string().trim()).optional(),
+  phones: z.array(z.object({ phone: z.string().trim() })).max(3, { message: "Maximum 3 phone numbers allowed" }).optional(),
   bio: z.string().max(500).optional(),
   profileImage: profileImageSchema.optional(),
   socialLinks: z.array(socialLinkSchema).optional(),
   address: z.string().max(200).optional(),
-  theme: themeSchema.optional(),
-});
+  theme: z
+  .enum([
+    "slate",
+    "secondary",
+    "tertiary",
+    "rose",
+    "indigo",
+    "emerald",
+    "amber",
+    "sky",
+    "navy",
+    "charcoal",
+    "steel",
+    "gold",
+    "platinum",
+    "obsidian",
+    "lavender",
+    "mint",
+    "sand",
+  ])
+  .default("slate")
+  .optional(),
+}).required();
 
 export const updateCardSchema = createCardSchema
   .partial()

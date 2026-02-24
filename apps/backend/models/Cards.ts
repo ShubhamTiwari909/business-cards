@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
-import { User } from "./Users";
 
 const cardSchema = new mongoose.Schema(
   {
+    backgroundImage: {
+      url: String,
+    },
     visibility: {
       type: String,
       required: true,
@@ -14,6 +16,11 @@ const cardSchema = new mongoose.Schema(
       ref: "User",
       required: true,
       index: true,
+    },
+    variant: {
+      type: String,
+      enum: ["minimal", "modern", "engineer", "marketing", "ceo", "company"],
+      default: "minimal",
     },
     cardType: {
       type: String,
@@ -53,16 +60,20 @@ const cardSchema = new mongoose.Schema(
         url: String,
       },
     },
-    email: [
+    emails: [
       {
-        type: String,
-        lowercase: true,
-      },
+        email: {
+          type: String,
+          trim: true,
+        }
+      }
     ],
-    phone: [
+    phones: [
       {
-        type: String,
-        trim: true,
+        phone: {
+          type: String,
+          trim: true,
+        }
       },
     ],
     bio: {
@@ -73,10 +84,9 @@ const cardSchema = new mongoose.Schema(
       url: String,
       config: {
         size: Number,
-        width: Number,
-        height: Number,
         fileType: String,
         fileName: String,
+        rounded: Boolean,
       },
     },
     socialLinks: [
@@ -92,9 +102,6 @@ const cardSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        icon: {
-          type: String,
-        },
       },
     ],
     address: {
@@ -102,14 +109,27 @@ const cardSchema = new mongoose.Schema(
       maxlength: 200,
     },
     theme: {
-      primaryColor: {
-        type: String,
-        default: "#3B82F6",
-      },
-      backgroundColor: {
-        type: String,
-        default: "#FFFFFF",
-      },
+      type: String,
+      enum: [
+        "slate",
+        "secondary",
+        "tertiary",
+        "rose",
+        "indigo",
+        "emerald",
+        "amber",
+        "sky",
+        "navy",
+        "charcoal",
+        "steel",
+        "gold",
+        "platinum",
+        "obsidian",
+        "lavender",
+        "mint",
+        "sand",
+      ],
+      default: "slate",
     },
   },
   {
