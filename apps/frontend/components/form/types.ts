@@ -44,7 +44,9 @@ const profileImageSchema = z.object({
 const socialLinkSchema = z.object({
   platform: z.string().min(1, { message: "Social platform is required" }),
   label: z.string().optional(),
-  url: z.string().min(1, { message: "Social link URL is required" }),
+  url: z
+    .url({ message: "Invalid URL" })
+    .min(1, { message: "Social link URL is required" }),
 });
 
 export const cardSchema = z.object({
@@ -118,8 +120,7 @@ export const cardSchema = z.object({
       "mint",
       "sand",
     ])
-    .default("slate")
-    .optional(),
+    .default("slate"),
 });
 
 export const updateCardSchema = cardSchema

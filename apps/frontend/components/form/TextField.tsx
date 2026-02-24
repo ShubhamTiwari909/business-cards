@@ -1,5 +1,6 @@
 "use client";
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
+import { useId } from "react";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
@@ -7,9 +8,6 @@ type Props<T extends FieldValues> = {
   as?: "input" | "textarea";
 } & React.InputHTMLAttributes<HTMLInputElement> &
   React.TextareaHTMLAttributes<HTMLTextAreaElement>;
-
-const inputId = (name: Path<FieldValues>) =>
-  `field-${String(name).replace(/\./g, "-")}`;
 
 export function TextField<T extends FieldValues>({
   name,
@@ -20,7 +18,7 @@ export function TextField<T extends FieldValues>({
 }: Props<T>) {
   const { control } = useFormContext();
   const InputComponent = as === "textarea" ? "textarea" : "input";
-
+  const inputId = useId();
   return (
     <Controller
       name={name}
@@ -31,7 +29,7 @@ export function TextField<T extends FieldValues>({
         >
           {label && (
             <label
-              htmlFor={inputId(name)}
+              htmlFor={inputId}
               className="shrink-0 text-sm font-medium  md:min-w-28"
             >
               {label}
@@ -39,9 +37,9 @@ export function TextField<T extends FieldValues>({
           )}
           <div className="min-w-0 flex-1 relative">
             <InputComponent
-              {...field}
               {...props}
-              id={inputId(name)}
+              {...field}
+              id={inputId}
               className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-neutral-900 shadow-sm transition placeholder:text-neutral-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-neutral-50 disabled:text-neutral-500 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-blue-400 dark:focus:ring-blue-400/20"
             />
             {error && (

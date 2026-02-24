@@ -90,8 +90,7 @@ export const createCardSchema = z.object({
       "mint",
       "sand",
     ])
-    .default("slate")
-    .optional(),
+    .default("slate"),
 });
 
 export const updateCardSchema = createCardSchema
