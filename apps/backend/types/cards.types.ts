@@ -44,57 +44,55 @@ const socialLinkSchema = z.object({
   url: z.string().min(1),
 });
 
-export const createCardSchema = z
-  .object({
-    visibility: cardVisibility.default("private"),
-    userId: objectIdString,
-    variant: z
-      .enum(["minimal", "modern", "engineer", "marketing", "ceo", "company"])
-      .default("minimal"),
-    cardType: cardTypeEnum.default("business"),
-    name: z.string().min(1).trim().max(50),
-    title: z.string().min(1).max(100),
-    company: companySchema.optional(),
-    emails: z
-      .array(
-        z.object({
-          email: z.email().transform((email) => email.toLowerCase()),
-        }),
-      )
-      .max(3, { message: "Maximum 3 emails allowed" })
-      .optional(),
-    phones: z
-      .array(z.object({ phone: z.string().trim() }))
-      .max(3, { message: "Maximum 3 phone numbers allowed" })
-      .optional(),
-    bio: z.string().max(500).optional(),
-    profileImage: profileImageSchema.optional(),
-    socialLinks: z.array(socialLinkSchema).optional(),
-    address: z.string().max(200).optional(),
-    theme: z
-      .enum([
-        "slate",
-        "secondary",
-        "tertiary",
-        "rose",
-        "indigo",
-        "emerald",
-        "amber",
-        "sky",
-        "navy",
-        "charcoal",
-        "steel",
-        "gold",
-        "platinum",
-        "obsidian",
-        "lavender",
-        "mint",
-        "sand",
-      ])
-      .default("slate")
-      .optional(),
-  })
-  .required();
+export const createCardSchema = z.object({
+  visibility: cardVisibility.default("private"),
+  userId: objectIdString,
+  variant: z
+    .enum(["minimal", "modern", "engineer", "marketing", "ceo", "company"])
+    .default("minimal"),
+  cardType: cardTypeEnum.default("business"),
+  name: z.string().min(1).trim().max(50),
+  title: z.string().min(1).max(100),
+  company: companySchema.optional(),
+  emails: z
+    .array(
+      z.object({
+        email: z.email().transform((email) => email.toLowerCase()),
+      }),
+    )
+    .max(3, { message: "Maximum 3 emails allowed" })
+    .optional(),
+  phones: z
+    .array(z.object({ phone: z.string().trim() }))
+    .max(3, { message: "Maximum 3 phone numbers allowed" })
+    .optional(),
+  bio: z.string().max(500).optional(),
+  profileImage: profileImageSchema.optional(),
+  socialLinks: z.array(socialLinkSchema).optional(),
+  address: z.string().max(200).optional(),
+  theme: z
+    .enum([
+      "slate",
+      "secondary",
+      "tertiary",
+      "rose",
+      "indigo",
+      "emerald",
+      "amber",
+      "sky",
+      "navy",
+      "charcoal",
+      "steel",
+      "gold",
+      "platinum",
+      "obsidian",
+      "lavender",
+      "mint",
+      "sand",
+    ])
+    .default("slate")
+    .optional(),
+});
 
 export const updateCardSchema = createCardSchema
   .partial()

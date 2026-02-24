@@ -54,7 +54,7 @@ export const cardSchema = z.object({
     })
     .optional(),
   visibility: cardVisibility.default("private"),
-  userId: objectIdString,
+  userId: objectIdString.optional(),
   variant: z
     .enum(["minimal", "modern", "engineer", "marketing", "ceo", "company"])
     .default("minimal"),
@@ -156,7 +156,7 @@ export const defaultValues: CardSchemaInput = {
     url: "",
   },
   visibility: "private",
-  userId: "",
+  userId: undefined,
   cardType: "business",
   variant: "minimal",
   name: "Username",

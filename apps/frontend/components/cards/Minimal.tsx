@@ -1,6 +1,6 @@
 "use client";
 
-import { Link2, Mail, MapPin, Phone, type LucideIcon } from "lucide-react";
+import { Link2, Mail, MapPin, Phone } from "lucide-react";
 import { CardSchemaInput } from "../form/types";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -26,24 +26,6 @@ const Minimal = ({ card }: { card: CardSchemaInput }) => {
     theme,
     backgroundImage,
   } = card;
-
-  const contactItems: { icon: LucideIcon; href?: string; value: string }[] = [];
-  emails?.forEach((e) => {
-    if (e?.email)
-      contactItems.push({
-        icon: Mail,
-        href: `mailto:${e.email}`,
-        value: e.email,
-      });
-  });
-  phones?.forEach((p) => {
-    if (p?.phone)
-      contactItems.push({
-        icon: Phone,
-        href: `tel:${p.phone.replace(/\s/g, "")}`,
-        value: p.phone,
-      });
-  });
 
   return (
     <article
