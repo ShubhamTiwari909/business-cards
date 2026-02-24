@@ -12,7 +12,10 @@ export const dbConnection = async () => {
     await mongoose.connect(mongoUri);
     console.log("Connected to MongoDB");
   } catch (error) {
-    console.error("Error connecting to MongoDB:", error instanceof Error ? error.message : error);
+    console.error(
+      "Error connecting to MongoDB:",
+      error instanceof Error ? error.message : error,
+    );
     if (error instanceof Error && error.cause) {
       console.error("Cause:", error.cause);
     }

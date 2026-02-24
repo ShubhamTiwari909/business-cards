@@ -74,7 +74,8 @@ const cardVariantOptions = [
   { value: "company", label: "Company" },
 ];
 
-const DEFAULT_USER_ID = process.env.NEXT_PUBLIC_API_USER_ID ?? "abcdabcdabcdabcdabcdabcd";
+const DEFAULT_USER_ID =
+  process.env.NEXT_PUBLIC_API_USER_ID ?? "abcdabcdabcdabcdabcdabcd";
 
 type FormProps = {
   editingCardId?: string | null;
@@ -114,10 +115,8 @@ const Form = ({ editingCardId = null }: FormProps) => {
       updateCard(id, payload),
   });
 
-  const isPending =
-    createMutation.isPending || updateMutation.isPending;
-  const submissionError =
-    createMutation.error ?? updateMutation.error;
+  const isPending = createMutation.isPending || updateMutation.isPending;
+  const submissionError = createMutation.error ?? updateMutation.error;
   const errorMessage =
     submissionError instanceof Error
       ? submissionError.message
@@ -267,7 +266,9 @@ const Form = ({ editingCardId = null }: FormProps) => {
     return (
       <div className="grid grid-cols-1 justify-between gap-10 md:grid-cols-2 place-items-center min-h-[40vh]">
         <div className="rounded-lg border border-red-500/50 bg-zinc-900 p-6 text-center">
-          <p className="text-red-400">Failed to load card. It may not exist or the request failed.</p>
+          <p className="text-red-400">
+            Failed to load card. It may not exist or the request failed.
+          </p>
         </div>
       </div>
     );
@@ -275,30 +276,29 @@ const Form = ({ editingCardId = null }: FormProps) => {
 
   return (
     <div className="grid grid-cols-1 justify-between gap-10 md:grid-cols-2 relative">
-      {(createMutation.isError || updateMutation.isError) && submissionError && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
-          role="alert"
-          aria-live="assertive"
-        >
-          <div className="max-w-md rounded-lg border border-red-500/50 bg-zinc-900 p-6 text-center shadow-xl">
-            <p className="text-lg font-medium text-red-400">
-              {errorMessage}
-            </p>
-            <Button
-              type="button"
-              variant="outline"
-              className="mt-4"
-              onClick={() => {
-                createMutation.reset();
-                updateMutation.reset();
-              }}
-            >
-              Dismiss
-            </Button>
+      {(createMutation.isError || updateMutation.isError) &&
+        submissionError && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+            role="alert"
+            aria-live="assertive"
+          >
+            <div className="max-w-md rounded-lg border border-red-500/50 bg-zinc-900 p-6 text-center shadow-xl">
+              <p className="text-lg font-medium text-red-400">{errorMessage}</p>
+              <Button
+                type="button"
+                variant="outline"
+                className="mt-4"
+                onClick={() => {
+                  createMutation.reset();
+                  updateMutation.reset();
+                }}
+              >
+                Dismiss
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       <div className="space-y-10 border border-gray-700 rounded-lg p-5 text-white">
         <FormProvider {...methods}>
           <form
@@ -306,195 +306,193 @@ const Form = ({ editingCardId = null }: FormProps) => {
             className="space-y-10"
             noValidate
           >
-          <div className="flex items-center gap-2">
-            <UploadField
-              id="background-image-upload"
-              handleUploadChange={handleBackgroundImageChange}
-              label="Background"
-              inputRef={backgroundImageInputRef}
+            <div className="flex items-center gap-2">
+              <UploadField
+                id="background-image-upload"
+                handleUploadChange={handleBackgroundImageChange}
+                label="Background"
+                inputRef={backgroundImageInputRef}
+              />
+              {watchValues.backgroundImage?.url && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    methods.setValue("backgroundImage.url", "");
+                    if (backgroundImageInputRef.current) {
+                      backgroundImageInputRef.current.value = "";
+                    }
+                  }}
+                  aria-label="Clear background image"
+                  className="cursor-pointer"
+                >
+                  <MdClear size={20} className="text-slate-100" />
+                </button>
+              )}
+            </div>
+            <SelectField<CardSchemaInput>
+              name="visibility"
+              label="Card Visibility"
+              options={cardVisibilityOptions}
             />
-            {watchValues.backgroundImage?.url && (
-              <button
-                type="button"
-                onClick={() => {
-                  methods.setValue("backgroundImage.url", "");
-                  if (backgroundImageInputRef.current) {
-                    backgroundImageInputRef.current.value = "";
-                  }
-                }}
-                aria-label="Clear background image"
-                className="cursor-pointer"
-              >
-                <MdClear size={20} className="text-slate-100" />
-              </button>
-            )}
-          </div>
-          <SelectField<CardSchemaInput>
-            name="visibility"
-            label="Card Visibility"
-            options={cardVisibilityOptions}
-          />
-          <SelectField<CardSchemaInput>
-            name="cardType"
-            label="Card Type"
-            options={cardTypeOptions}
-          />
-          <TextField<CardSchemaInput>
-            name="name"
-            label="Name"
-            placeholder="Enter your name"
-          />
-          <TextField<CardSchemaInput>
-            name="title"
-            label="Title"
-            placeholder="Enter your title"
-          />
-          <div className="p-5 border border-gray-700 rounded-lg space-y-10">
+            <SelectField<CardSchemaInput>
+              name="cardType"
+              label="Card Type"
+              options={cardTypeOptions}
+            />
             <TextField<CardSchemaInput>
-              name="company.name"
-              label="Company"
-              placeholder="Enter your company name"
+              name="name"
+              label="Name"
+              placeholder="Enter your name"
             />
-            <div className="flex items-center gap-2">
-              <UploadField
-                id="company-logo-upload"
-                handleUploadChange={handleCompanyLogoChange}
-                label="Company Logo"
-                inputRef={companyLogoInputRef}
-              />
-              {watchValues.company?.logo?.url && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    methods.setValue("company.logo.url", "");
-                    if (companyLogoInputRef.current) {
-                      companyLogoInputRef.current.value = "";
-                    }
-                  }}
-                  aria-label="Clear company logo"
-                  className="cursor-pointer"
-                >
-                  <MdClear size={20} className="text-slate-100" />
-                </button>
-              )}
-            </div>
-          </div>
-          <ArrayField
-            fields={emailFields}
-            append={() => appendEmail({ email: "" })}
-            remove={removeEmail}
-            name="emails"
-            limit={3}
-            input={[
-              {
-                label: "Email",
-                placeholder: "Enter your email",
-                name: "email",
-              },
-            ]}
-          />
-          <ArrayField
-            fields={phoneFields}
-            append={() => appendPhone({ phone: "" })}
-            remove={removePhone}
-            name="phones"
-            limit={3}
-            input={[
-              {
-                label: "Phone",
-                placeholder: "Enter your phone number",
-                name: "phone",
-              },
-            ]}
-          />
-          <TextField<CardSchemaInput>
-            as="textarea"
-            rows={4}
-            name="bio"
-            label="Bio"
-            placeholder="Enter your bio"
-          />
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <UploadField
-                id="profile-image-upload"
-                handleUploadChange={handleProfileImageChange}
-                label="Profile Image"
-                inputRef={profileImageInputRef}
-              />
-              {watchValues.profileImage?.url && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    methods.setValue("profileImage.url", "");
-                    if (profileImageInputRef.current) {
-                      profileImageInputRef.current.value = "";
-                    }
-                  }}
-                  aria-label="Clear profile image"
-                  className="cursor-pointer"
-                >
-                  <MdClear size={20} className="text-slate-100" />
-                </button>
-              )}
-            </div>
-            <Checkbox
-              label="Rounded Image"
-              onChange={handleRoundedImageChange}
+            <TextField<CardSchemaInput>
+              name="title"
+              label="Title"
+              placeholder="Enter your title"
             />
-          </div>
-          <ArrayField
-            fields={socialLinkFields}
-            append={() =>
-              appendSocialLink({ platform: "", label: "", url: "" })
-            }
-            remove={removeSocialLink}
-            name="socialLinks"
-            limit={3}
-            input={[
-              {
-                label: "Social Platform",
-                placeholder: "Enter your social platform name",
-                name: "platform",
-              },
-              {
-                label: "Label",
-                placeholder: "Enter your social link label",
-                name: "label",
-              },
-              {
-                label: "URL",
-                placeholder: "Enter your social link URL",
-                name: "url",
-              },
-            ]}
-          />
-          <TextField<CardSchemaInput>
-            name="address"
-            label="Address"
-            placeholder="Enter your address"
-          />
-          <SelectField<CardSchemaInput>
-            name="theme"
-            options={themeColorOptions}
-            className="fixed top-22 right-5"
-          />
-          <SelectField<CardSchemaInput>
-            name="variant"
-            options={cardVariantOptions}
-            className="fixed top-40 right-5"
-          />
+            <div className="p-5 border border-gray-700 rounded-lg space-y-10">
+              <TextField<CardSchemaInput>
+                name="company.name"
+                label="Company"
+                placeholder="Enter your company name"
+              />
+              <div className="flex items-center gap-2">
+                <UploadField
+                  id="company-logo-upload"
+                  handleUploadChange={handleCompanyLogoChange}
+                  label="Company Logo"
+                  inputRef={companyLogoInputRef}
+                />
+                {watchValues.company?.logo?.url && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      methods.setValue("company.logo.url", "");
+                      if (companyLogoInputRef.current) {
+                        companyLogoInputRef.current.value = "";
+                      }
+                    }}
+                    aria-label="Clear company logo"
+                    className="cursor-pointer"
+                  >
+                    <MdClear size={20} className="text-slate-100" />
+                  </button>
+                )}
+              </div>
+            </div>
+            <ArrayField
+              fields={emailFields}
+              append={() => appendEmail({ email: "" })}
+              remove={removeEmail}
+              name="emails"
+              limit={3}
+              input={[
+                {
+                  label: "Email",
+                  placeholder: "Enter your email",
+                  name: "email",
+                },
+              ]}
+            />
+            <ArrayField
+              fields={phoneFields}
+              append={() => appendPhone({ phone: "" })}
+              remove={removePhone}
+              name="phones"
+              limit={3}
+              input={[
+                {
+                  label: "Phone",
+                  placeholder: "Enter your phone number",
+                  name: "phone",
+                },
+              ]}
+            />
+            <TextField<CardSchemaInput>
+              as="textarea"
+              rows={4}
+              name="bio"
+              label="Bio"
+              placeholder="Enter your bio"
+            />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <UploadField
+                  id="profile-image-upload"
+                  handleUploadChange={handleProfileImageChange}
+                  label="Profile Image"
+                  inputRef={profileImageInputRef}
+                />
+                {watchValues.profileImage?.url && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      methods.setValue("profileImage.url", "");
+                      if (profileImageInputRef.current) {
+                        profileImageInputRef.current.value = "";
+                      }
+                    }}
+                    aria-label="Clear profile image"
+                    className="cursor-pointer"
+                  >
+                    <MdClear size={20} className="text-slate-100" />
+                  </button>
+                )}
+              </div>
+              <Checkbox
+                label="Rounded Image"
+                onChange={handleRoundedImageChange}
+              />
+            </div>
+            <ArrayField
+              fields={socialLinkFields}
+              append={() =>
+                appendSocialLink({ platform: "", label: "", url: "" })
+              }
+              remove={removeSocialLink}
+              name="socialLinks"
+              limit={3}
+              input={[
+                {
+                  label: "Social Platform",
+                  placeholder: "Enter your social platform name",
+                  name: "platform",
+                },
+                {
+                  label: "Label",
+                  placeholder: "Enter your social link label",
+                  name: "label",
+                },
+                {
+                  label: "URL",
+                  placeholder: "Enter your social link URL",
+                  name: "url",
+                },
+              ]}
+            />
+            <TextField<CardSchemaInput>
+              name="address"
+              label="Address"
+              placeholder="Enter your address"
+            />
+            <SelectField<CardSchemaInput>
+              name="theme"
+              options={themeColorOptions}
+              className="fixed top-22 right-5"
+            />
+            <SelectField<CardSchemaInput>
+              name="variant"
+              options={cardVariantOptions}
+              className="fixed top-40 right-5"
+            />
             <div className="pt-4">
               <Button
                 type="submit"
                 disabled={isPending}
-                data-testid={isEditMode ? "update-card-button" : "save-card-button"}
+                data-testid={
+                  isEditMode ? "update-card-button" : "save-card-button"
+                }
               >
-                {isPending
-                  ? "Saving…"
-                  : isEditMode
-                    ? "Update"
-                    : "Save"}
+                {isPending ? "Saving…" : isEditMode ? "Update" : "Save"}
               </Button>
             </div>
           </form>

@@ -5,14 +5,12 @@ export function backendCardToFormDefaults(card: BackendCard): CardSchemaInput {
     backgroundImage: card.backgroundImage
       ? { url: card.backgroundImage.url ?? "" }
       : { url: "" },
-    visibility:
-      (card.visibility === "public" || card.visibility === "private"
-        ? card.visibility
-        : "private") as "public" | "private",
+    visibility: (card.visibility === "public" || card.visibility === "private"
+      ? card.visibility
+      : "private") as "public" | "private",
     userId: undefined,
     cardType: card.cardType ?? "business",
-    variant:
-      (card.variant as CardSchemaInput["variant"]) ?? "minimal",
+    variant: (card.variant as CardSchemaInput["variant"]) ?? "minimal",
     name: card.name ?? "",
     title: card.title ?? "",
     company: card.company

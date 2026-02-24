@@ -1,8 +1,7 @@
 const getBaseUrl = (): string =>
   process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
-export const cardsApiBaseUrl = (): string =>
-  `${getBaseUrl()}/api/cards`;
+export const cardsApiBaseUrl = (): string => `${getBaseUrl()}/api/cards`;
 
 export async function apiRequest<T>(
   url: string,
