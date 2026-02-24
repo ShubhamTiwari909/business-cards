@@ -4,6 +4,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@utility max-w-10xl {
+  max-width: 90rem;
+}
+
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -43,6 +48,61 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  /* Business card theme colors (see :root variables below) */
+  --color-theme-navy-100: var(--theme-navy-100);
+  --color-theme-navy-200: var(--theme-navy-200);
+  --color-theme-navy-600: var(--theme-navy-600);
+  --color-theme-navy-700: var(--theme-navy-700);
+  --color-theme-navy-800: var(--theme-navy-800);
+  --color-theme-navy-900: var(--theme-navy-900);
+  --color-theme-charcoal-100: var(--theme-charcoal-100);
+  --color-theme-charcoal-200: var(--theme-charcoal-200);
+  --color-theme-charcoal-600: var(--theme-charcoal-600);
+  --color-theme-charcoal-700: var(--theme-charcoal-700);
+  --color-theme-charcoal-800: var(--theme-charcoal-800);
+  --color-theme-charcoal-900: var(--theme-charcoal-900);
+  --color-theme-steel-100: var(--theme-steel-100);
+  --color-theme-steel-200: var(--theme-steel-200);
+  --color-theme-steel-600: var(--theme-steel-600);
+  --color-theme-steel-700: var(--theme-steel-700);
+  --color-theme-steel-800: var(--theme-steel-800);
+  --color-theme-steel-900: var(--theme-steel-900);
+  --color-theme-gold-100: var(--theme-gold-100);
+  --color-theme-gold-200: var(--theme-gold-200);
+  --color-theme-gold-600: var(--theme-gold-600);
+  --color-theme-gold-700: var(--theme-gold-700);
+  --color-theme-gold-800: var(--theme-gold-800);
+  --color-theme-gold-900: var(--theme-gold-900);
+  --color-theme-platinum-100: var(--theme-platinum-100);
+  --color-theme-platinum-200: var(--theme-platinum-200);
+  --color-theme-platinum-600: var(--theme-platinum-600);
+  --color-theme-platinum-700: var(--theme-platinum-700);
+  --color-theme-platinum-800: var(--theme-platinum-800);
+  --color-theme-platinum-900: var(--theme-platinum-900);
+  --color-theme-obsidian-100: var(--theme-obsidian-100);
+  --color-theme-obsidian-200: var(--theme-obsidian-200);
+  --color-theme-obsidian-600: var(--theme-obsidian-600);
+  --color-theme-obsidian-700: var(--theme-obsidian-700);
+  --color-theme-obsidian-800: var(--theme-obsidian-800);
+  --color-theme-obsidian-900: var(--theme-obsidian-900);
+  --color-theme-lavender-100: var(--theme-lavender-100);
+  --color-theme-lavender-200: var(--theme-lavender-200);
+  --color-theme-lavender-600: var(--theme-lavender-600);
+  --color-theme-lavender-700: var(--theme-lavender-700);
+  --color-theme-lavender-800: var(--theme-lavender-800);
+  --color-theme-lavender-900: var(--theme-lavender-900);
+  --color-theme-mint-100: var(--theme-mint-100);
+  --color-theme-mint-200: var(--theme-mint-200);
+  --color-theme-mint-600: var(--theme-mint-600);
+  --color-theme-mint-700: var(--theme-mint-700);
+  --color-theme-mint-800: var(--theme-mint-800);
+  --color-theme-mint-900: var(--theme-mint-900);
+  --color-theme-sand-100: var(--theme-sand-100);
+  --color-theme-sand-200: var(--theme-sand-200);
+  --color-theme-sand-600: var(--theme-sand-600);
+  --color-theme-sand-700: var(--theme-sand-700);
+  --color-theme-sand-800: var(--theme-sand-800);
+  --color-theme-sand-900: var(--theme-sand-900);
 }
 
 :root {
@@ -78,6 +138,77 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+   /* Navy – deep corporate blue */
+   --theme-navy-100: oklch(0.952 0.018 264);
+   --theme-navy-200: oklch(0.88 0.03 264);
+   --theme-navy-600: oklch(0.42 0.11 264);
+   --theme-navy-700: oklch(0.34 0.09 264);
+   --theme-navy-800: oklch(0.28 0.07 264);
+   --theme-navy-900: oklch(0.22 0.055 264);
+ 
+   /* Charcoal – soft neutral dark */
+   --theme-charcoal-100: oklch(0.965 0.006 264);
+   --theme-charcoal-200: oklch(0.90 0.012 264);
+   --theme-charcoal-600: oklch(0.44 0.018 264);
+   --theme-charcoal-700: oklch(0.35 0.014 264);
+   --theme-charcoal-800: oklch(0.28 0.011 264);
+   --theme-charcoal-900: oklch(0.22 0.008 264);
+ 
+   /* Steel – cool refined gray */
+   --theme-steel-100: oklch(0.96 0.01 260);
+   --theme-steel-200: oklch(0.89 0.018 260);
+   --theme-steel-600: oklch(0.50 0.025 260);
+   --theme-steel-700: oklch(0.40 0.02 260);
+   --theme-steel-800: oklch(0.32 0.016 260);
+   --theme-steel-900: oklch(0.26 0.012 260);
+ 
+   /* Gold – warm premium accent */
+   --theme-gold-100: oklch(0.97 0.025 85);
+   --theme-gold-200: oklch(0.92 0.05 82);
+   --theme-gold-600: oklch(0.72 0.13 82);
+   --theme-gold-700: oklch(0.62 0.11 75);
+   --theme-gold-800: oklch(0.52 0.09 72);
+   --theme-gold-900: oklch(0.44 0.07 70);
+ 
+   /* Platinum – cool light metallic */
+   --theme-platinum-100: oklch(0.98 0.005 260);
+   --theme-platinum-200: oklch(0.93 0.012 260);
+   --theme-platinum-600: oklch(0.62 0.02 260);
+   --theme-platinum-700: oklch(0.50 0.018 260);
+   --theme-platinum-800: oklch(0.38 0.014 260);
+   --theme-platinum-900: oklch(0.28 0.01 260);
+ 
+   /* Obsidian – deep, subtle blue-black */
+   --theme-obsidian-100: oklch(0.94 0.012 264);
+   --theme-obsidian-200: oklch(0.82 0.025 264);
+   --theme-obsidian-600: oklch(0.28 0.032 264);
+   --theme-obsidian-700: oklch(0.21 0.026 264);
+   --theme-obsidian-800: oklch(0.16 0.02 264);
+   --theme-obsidian-900: oklch(0.12 0.015 264);
+ 
+   /* Lavender – soft, refined purple */
+   --theme-lavender-100: oklch(0.97 0.028 300);
+   --theme-lavender-200: oklch(0.90 0.06 298);
+   --theme-lavender-600: oklch(0.56 0.13 298);
+   --theme-lavender-700: oklch(0.47 0.11 298);
+   --theme-lavender-800: oklch(0.39 0.09 296);
+   --theme-lavender-900: oklch(0.32 0.07 295);
+ 
+   /* Mint – fresh, calm green */
+   --theme-mint-100: oklch(0.97 0.038 165);
+   --theme-mint-200: oklch(0.91 0.065 165);
+   --theme-mint-600: oklch(0.54 0.11 165);
+   --theme-mint-700: oklch(0.45 0.09 165);
+   --theme-mint-800: oklch(0.38 0.07 163);
+   --theme-mint-900: oklch(0.30 0.055 162);
+ 
+   /* Sand – warm, approachable beige */
+   --theme-sand-100: oklch(0.98 0.022 85);
+   --theme-sand-200: oklch(0.93 0.04 82);
+   --theme-sand-600: oklch(0.64 0.075 75);
+   --theme-sand-700: oklch(0.54 0.06 72);
+   --theme-sand-800: oklch(0.45 0.048 70);
+   --theme-sand-900: oklch(0.38 0.038 68);
 }
 
 .dark {
@@ -120,5 +251,108 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@custom-variant slate {
+	&:where([data-theme='slate'], [data-theme='slate'] *) {
+		@slot;
+	}
+}
+
+@custom-variant secondary {
+	&:where([data-theme='secondary'], [data-theme='secondary'] *) {
+		@slot;
+	}
+}
+
+@custom-variant tertiary {
+	&:where([data-theme='tertiary'], [data-theme='tertiary'] *) {
+		@slot;
+	}
+}
+
+@custom-variant rose {
+	&:where([data-theme='rose'], [data-theme='rose'] *) {
+		@slot;
+	}
+}
+
+@custom-variant indigo {
+	&:where([data-theme='indigo'], [data-theme='indigo'] *) {
+		@slot;
+	}
+}
+
+@custom-variant emerald {
+	&:where([data-theme='emerald'], [data-theme='emerald'] *) {
+		@slot;
+	}
+}
+
+@custom-variant amber {
+	&:where([data-theme='amber'], [data-theme='amber'] *) {
+		@slot;
+	}
+}
+
+@custom-variant sky {
+	&:where([data-theme='sky'], [data-theme='sky'] *) {
+		@slot;
+	}
+}
+
+
+@custom-variant navy {
+  &:where([data-theme="navy"], [data-theme="navy"] *) {
+    @slot;
+  }
+}
+
+@custom-variant charcoal {
+  &:where([data-theme="charcoal"], [data-theme="charcoal"] *) {
+    @slot;
+  }
+}
+
+@custom-variant steel {
+  &:where([data-theme="steel"], [data-theme="steel"] *) {
+    @slot;
+  }
+}
+
+@custom-variant gold {
+  &:where([data-theme="gold"], [data-theme="gold"] *) {
+    @slot;
+  }
+}
+
+@custom-variant platinum {
+  &:where([data-theme="platinum"], [data-theme="platinum"] *) {
+    @slot;
+  }
+}
+
+@custom-variant obsidian {
+  &:where([data-theme="obsidian"], [data-theme="obsidian"] *) {
+    @slot;
+  }
+}
+
+@custom-variant lavender {
+  &:where([data-theme="lavender"], [data-theme="lavender"] *) {
+    @slot;
+  }
+}
+
+@custom-variant mint {
+  &:where([data-theme="mint"], [data-theme="mint"] *) {
+    @slot;
+  }
+}
+
+@custom-variant sand {
+  &:where([data-theme="sand"], [data-theme="sand"] *) {
+    @slot;
   }
 }

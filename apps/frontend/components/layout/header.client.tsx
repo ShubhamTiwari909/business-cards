@@ -7,8 +7,8 @@ const HeaderClient = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const handleScroll = () => {
       const LARGE_SCREEN_BREAKPOINT = 1024;
-      const DESKTOP_SCROLL_THRESHOLD = 200;
-      const MOBILE_SCROLL_THRESHOLD = 100;
+      const DESKTOP_SCROLL_THRESHOLD = 20;
+      const MOBILE_SCROLL_THRESHOLD = 50;
 
       const isLargeScreen = window.innerWidth > LARGE_SCREEN_BREAKPOINT;
       const scrollThreshold = isLargeScreen

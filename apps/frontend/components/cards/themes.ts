@@ -1,0 +1,27 @@
+export const themesMapping = {
+  cardBg: {
+    bg: "slate:bg-slate-100 secondary:bg-violet-100 tertiary:bg-teal-100 rose:bg-rose-100 indigo:bg-indigo-100 emerald:bg-emerald-100 amber:bg-amber-100 sky:bg-sky-100 navy:bg-theme-navy-100 charcoal:bg-theme-charcoal-100 steel:bg-theme-steel-100 gold:bg-theme-gold-100 platinum:bg-theme-platinum-100 obsidian:bg-theme-obsidian-100 lavender:bg-theme-lavender-100 mint:bg-theme-mint-100 sand:bg-theme-sand-100",
+  },
+  accent:
+    "slate:bg-slate-600 secondary:bg-violet-600 tertiary:bg-teal-600 rose:bg-rose-600 indigo:bg-indigo-600 emerald:bg-emerald-600 amber:bg-amber-600 sky:bg-sky-600 navy:bg-theme-navy-600 charcoal:bg-theme-charcoal-600 steel:bg-theme-steel-600 gold:bg-theme-gold-600 platinum:bg-theme-platinum-600 obsidian:bg-theme-obsidian-600 lavender:bg-theme-lavender-600 mint:bg-theme-mint-600 sand:bg-theme-sand-600",
+  bg: {
+    white:
+      "slate:bg-white secondary:bg-white tertiary:bg-white rose:bg-white indigo:bg-white emerald:bg-white amber:bg-white sky:bg-white navy:bg-white charcoal:bg-white steel:bg-white gold:bg-white platinum:bg-white obsidian:bg-white lavender:bg-white mint:bg-white sand:bg-white",
+    100: "slate:bg-slate-100 secondary:bg-violet-100 tertiary:bg-teal-100 rose:bg-rose-100 indigo:bg-indigo-100 emerald:bg-emerald-100 amber:bg-amber-100 sky:bg-sky-100 navy:bg-theme-navy-100 charcoal:bg-theme-charcoal-100 steel:bg-theme-steel-100 gold:bg-theme-gold-100 platinum:bg-theme-platinum-100 obsidian:bg-theme-obsidian-100 lavender:bg-theme-lavender-100 mint:bg-theme-mint-100 sand:bg-theme-sand-100",
+    600: "slate:bg-slate-600 secondary:bg-violet-600 tertiary:bg-teal-600 rose:bg-rose-600 indigo:bg-indigo-600 emerald:bg-emerald-600 amber:bg-amber-600 sky:bg-sky-600 navy:bg-theme-navy-600 charcoal:bg-theme-charcoal-600 steel:bg-theme-steel-600 gold:bg-theme-gold-600 platinum:bg-theme-platinum-600 obsidian:bg-theme-obsidian-600 lavender:bg-theme-lavender-600 mint:bg-theme-mint-600 sand:bg-theme-sand-600",
+    700: "slate:bg-slate-700 secondary:bg-violet-700 tertiary:bg-teal-700 rose:bg-rose-700 indigo:bg-indigo-700 emerald:bg-emerald-700 amber:bg-amber-700 sky:bg-sky-700 navy:bg-theme-navy-700 charcoal:bg-theme-charcoal-700 steel:bg-theme-steel-700 gold:bg-theme-gold-700 platinum:bg-theme-platinum-700 obsidian:bg-theme-obsidian-700 lavender:bg-theme-lavender-700 mint:bg-theme-mint-700 sand:bg-theme-sand-700",
+    900: "slate:bg-slate-900 secondary:bg-violet-900 tertiary:bg-teal-900 rose:bg-rose-900 indigo:bg-indigo-900 emerald:bg-emerald-900 amber:bg-amber-900 sky:bg-sky-900 navy:bg-theme-navy-900 charcoal:bg-theme-charcoal-900 steel:bg-theme-steel-900 gold:bg-theme-gold-900 platinum:bg-theme-platinum-900 obsidian:bg-theme-obsidian-900 lavender:bg-theme-lavender-900 mint:bg-theme-mint-900 sand:bg-theme-sand-900",
+  },
+  text: {
+    white:
+      "slate:text-white secondary:text-white tertiary:text-white rose:text-white indigo:text-white emerald:text-white amber:text-white sky:text-white navy:text-white charcoal:text-white steel:text-white gold:text-white platinum:text-white obsidian:text-white lavender:text-white mint:text-white sand:text-white",
+    600: "slate:text-slate-600 secondary:text-violet-600 tertiary:text-teal-600 rose:text-rose-600 indigo:text-indigo-600 emerald:text-emerald-600 amber:text-amber-600 sky:text-sky-600 navy:text-theme-navy-600 charcoal:text-theme-charcoal-600 steel:text-theme-steel-600 gold:text-theme-gold-600 platinum:text-theme-platinum-600 obsidian:text-theme-obsidian-600 lavender:text-theme-lavender-600 mint:text-theme-mint-600 sand:text-theme-sand-600",
+    700: "slate:text-slate-700 secondary:text-violet-700 tertiary:text-teal-700 rose:text-rose-700 indigo:text-indigo-700 emerald:text-emerald-700 amber:text-amber-700 sky:text-sky-700 navy:text-theme-navy-700 charcoal:text-theme-charcoal-700 steel:text-theme-steel-700 gold:text-theme-gold-700 platinum:text-theme-platinum-700 obsidian:text-theme-obsidian-700 lavender:text-theme-lavender-700 mint:text-theme-mint-700 sand:text-theme-sand-700",
+    800: "slate:text-slate-800 secondary:text-violet-800 tertiary:text-teal-800 rose:text-rose-800 indigo:text-indigo-800 emerald:text-emerald-800 amber:text-amber-800 sky:text-sky-800 navy:text-theme-navy-800 charcoal:text-theme-charcoal-800 steel:text-theme-steel-800 gold:text-theme-gold-800 platinum:text-theme-platinum-800 obsidian:text-theme-obsidian-800 lavender:text-theme-lavender-800 mint:text-theme-mint-800 sand:text-theme-sand-800",
+  },
+  border: {
+    white:
+      "slate:border-white secondary:border-white tertiary:border-white rose:border-white indigo:border-white emerald:border-white amber:border-white sky:border-white navy:border-white charcoal:border-white steel:border-white gold:border-white platinum:border-white obsidian:border-white lavender:border-white mint:border-white sand:border-white",
+    100: "slate:border-slate-200 secondary:border-violet-100 tertiary:border-teal-100 rose:border-rose-100 indigo:border-indigo-100 emerald:border-emerald-100 amber:border-amber-100 sky:border-sky-100 navy:border-theme-navy-200 charcoal:border-theme-charcoal-200 steel:border-theme-steel-200 gold:border-theme-gold-200 platinum:border-theme-platinum-200 obsidian:border-theme-obsidian-200 lavender:border-theme-lavender-200 mint:border-theme-mint-200 sand:border-theme-sand-200",
+  },
+};
