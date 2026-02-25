@@ -3,8 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { SessionProvider } from "@/components/providers/session-provider";
 import "./globals.css";
 import { Suspense } from "react";
+import CookieProviderClient from "@/components/layout/CookieProvider.client";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,13 +33,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-transparent`}
       >
-        <QueryProvider>
-          <Header />
-          {children}
-          <Suspense fallback={<div>Loading...</div>}>
-            <Footer />
-          </Suspense>
-        </QueryProvider>
+        <CookieProviderClient>
+          <QueryProvider>
+            <SessionProvider>
+              <Header />
+              {children}
+              <Suspense fallback={<div>Loading...</div>}>
+                <Footer />
+              </Suspense>
+            </SessionProvider>
+          </QueryProvider>
+        </CookieProviderClient>
       </body>
     </html>
   );

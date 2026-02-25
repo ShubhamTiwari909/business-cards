@@ -24,9 +24,9 @@ const HeaderClient = ({ children }: { children: React.ReactNode }) => {
   return (
     <header
       className={cn(
-        "fixed top-0 z-50 w-full  text-zinc-100",
+        "fixed top-0 z-50 w-full  text-zinc-100 border-b-2 border-white/10",
         isScrolled
-          ? "border-b-2 border-white/10 bg-linear-to-r from-zinc-900 via-slate-900 to-zinc-900"
+          ? "bg-linear-to-r from-zinc-900 via-slate-900 to-zinc-900"
           : "bg-transparent",
       )}
     >

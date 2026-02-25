@@ -3,6 +3,8 @@ const getBaseUrl = (): string =>
 
 export const cardsApiBaseUrl = (): string => `${getBaseUrl()}/api/cards`;
 
+export const usersApiBaseUrl = (): string => `${getBaseUrl()}/api/users`;
+
 export async function apiRequest<T>(
   url: string,
   options: RequestInit = {},

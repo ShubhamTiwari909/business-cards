@@ -12,7 +12,7 @@ const cardSchema = new mongoose.Schema(
       default: "private",
     },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "User",
       required: true,
       index: true,
