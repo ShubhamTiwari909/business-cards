@@ -39,14 +39,15 @@ export default function CreateCardClient() {
                 Sign in to create a card
               </h2>
               <p className="text-sm text-zinc-400 md:text-base">
-                Use your Google account to get started and save your business cards.
+                Use your Google account to get started and save your business
+                cards.
               </p>
             </div>
             <HeaderAuth buttonClassName="w-full sm:w-auto" />
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return <Form editingCardId={editingCardId} />;

@@ -8,7 +8,7 @@ export type AddUserPayload = {
 };
 
 export async function addUser(payload: AddUserPayload) {
-  const { status, data } = await apiRequest<{ message: string, id: string }>(
+  const { status, data } = await apiRequest<{ message: string; id: string }>(
     `${usersApiBaseUrl()}/add`,
     {
       method: "POST",

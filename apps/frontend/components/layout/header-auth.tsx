@@ -60,7 +60,13 @@ export function HeaderAuth({
       data-testid="header-logout-button"
     >
       <span>Logout</span>
-      <Image src={data?.user?.image ?? ""} alt="User" className="rounded-full" width={20} height={20} />
+      <Image
+        src={data?.user?.image ?? ""}
+        alt="User"
+        className="rounded-full"
+        width={20}
+        height={20}
+      />
     </Button>
   );
 }

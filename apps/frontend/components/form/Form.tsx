@@ -87,7 +87,7 @@ const Form = ({ editingCardId = null }: FormProps) => {
   });
   const isEditMode = Boolean(editingCardId);
   const { data: session } = useSession();
-  
+
   const {
     data: cardData,
     isSuccess: cardLoaded,
