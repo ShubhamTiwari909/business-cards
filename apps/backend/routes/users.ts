@@ -18,12 +18,17 @@ router.post(
     }
   },
 );
-router.post("/logout", tokenAuth, dynamicLimiter(10, { windowMs: 60 * 1000 * 60 }), async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    await logoutUser(req, res, next);
-  } catch (error) {
-    next(error);
-  }
-})
+router.post(
+  "/logout",
+  tokenAuth,
+  dynamicLimiter(10, { windowMs: 60 * 1000 * 60 }),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await logoutUser(req, res, next);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 export default router;

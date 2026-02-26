@@ -8,9 +8,7 @@ const nextAuthSecret = process.env.NEXTAUTH_SECRET;
 const internalSecret = process.env.INTERNAL_SECRET;
 
 if (!googleId || !googleSecret || !nextAuthSecret || !internalSecret) {
-  throw new Error(
-    "Missing required environment variables for authentication.",
-  );
+  throw new Error("Missing required environment variables for authentication.");
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -28,16 +26,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user }) {
       try {
-        const response = await addUser({
-          name: user.name ?? "",
-          email: user.email ?? "",
-          image: user.image ?? undefined,
-          provider: "google",
-        }, internalSecret);
+        const response = await addUser(
+          {
+            name: user.name ?? "",
+            email: user.email ?? "",
+            image: user.image ?? undefined,
+            provider: "google",
+          },
+          internalSecret,
+        );
         if (response.status !== 200) {
           return false;
         }
-        user.accessToken = response.data.accessToken
+        user.accessToken = response.data.accessToken;
         return true;
       } catch (error) {
         console.error("Failed to add user during sign in:", error);
@@ -46,14 +47,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async jwt({ token, user }) {
       if (user?.accessToken) {
-        token.accessToken = user.accessToken // persist into encrypted NextAuth cookie
+        token.accessToken = user.accessToken; // persist into encrypted NextAuth cookie
       }
-      return token
+      return token;
     },
 
     async session({ session, token }) {
-      session.user.accessToken = token.accessToken as string // expose to frontend via useSession()
-      return session
+      session.user.accessToken = token.accessToken as string; // expose to frontend via useSession()
+      return session;
     },
   },
 });

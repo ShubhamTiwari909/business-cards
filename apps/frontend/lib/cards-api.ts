@@ -5,10 +5,13 @@ export type CreateCardPayload = CardSchemaInput & {
   userId: string;
 };
 
-export async function getCardById(id: string, accessToken: string): Promise<BackendCard> {
+export async function getCardById(
+  id: string,
+  accessToken: string,
+): Promise<BackendCard> {
   const { data } = await apiRequest<{ data: BackendCard }>(
     `${cardsApiBaseUrl()}/${encodeURIComponent(id)}`,
-    { method: "GET", headers: { "Authorization": `Bearer ${accessToken}` } },
+    { method: "GET", headers: { Authorization: `Bearer ${accessToken}` } },
   );
   if (!data?.data) {
     throw new Error("Card not found");
@@ -26,7 +29,7 @@ export async function createCard(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(payload),
     },
@@ -48,7 +51,7 @@ export async function updateCard(
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(payload),
     },

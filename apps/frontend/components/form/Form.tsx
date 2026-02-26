@@ -95,7 +95,8 @@ const Form = ({ editingCardId = null }: FormProps) => {
     isError: cardFetchError,
   } = useQuery({
     queryKey: ["card", editingCardId],
-    queryFn: () => getCardById(editingCardId!, session?.user?.accessToken ?? ""),
+    queryFn: () =>
+      getCardById(editingCardId!, session?.user?.accessToken ?? ""),
     enabled: isEditMode && Boolean(editingCardId),
   });
 
@@ -106,7 +107,8 @@ const Form = ({ editingCardId = null }: FormProps) => {
   }, [cardLoaded, cardData, methods]);
 
   const createMutation = useMutation({
-    mutationFn: (payload: CreateCardPayload) => createCard(payload, session?.user?.accessToken ?? ""),
+    mutationFn: (payload: CreateCardPayload) =>
+      createCard(payload, session?.user?.accessToken ?? ""),
   });
 
   const updateMutation = useMutation({
