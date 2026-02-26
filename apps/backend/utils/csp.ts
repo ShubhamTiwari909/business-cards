@@ -26,5 +26,6 @@ export const corsHandler = cors({
       callback(new Error("Not allowed by CORS"));
     }
   },
+  credentials: true,
   optionsSuccessStatus: 200,
 });
