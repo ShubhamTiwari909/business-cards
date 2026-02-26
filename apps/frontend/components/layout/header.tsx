@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { HeaderAuth } from "./header-auth";
 import { HeaderMobile } from "./header-mobile";
 import HeaderClient from "./header.client";
 
@@ -34,15 +34,7 @@ export function Header() {
                 {label}
               </Link>
             ))}
-            <Button
-              asChild
-              variant="default"
-              size="sm"
-              className="bg-zinc-100 text-zinc-900 shadow-none transition-all duration-200 hover:scale-105 hover:bg-zinc-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] active:scale-100"
-              data-testid="header-login-button"
-            >
-              <Link href="/login">Login</Link>
-            </Button>
+            <HeaderAuth />
           </div>
         </nav>
       </div>

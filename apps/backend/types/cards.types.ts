@@ -51,7 +51,7 @@ export const createCardSchema = z.object({
     })
     .optional(),
   visibility: cardVisibility.default("private"),
-  userId: objectIdString,
+  userId: z.email(),
   variant: z
     .enum(["minimal", "modern", "engineer", "marketing", "ceo", "company"])
     .default("minimal"),
@@ -120,7 +120,7 @@ export type UpdateCardVisibilityInput = z.infer<
 >;
 
 export const getCardsSchema = z.object({
-  userId: objectIdString.optional(),
+  userId: z.email().optional(),
   limit: z.coerce.number().int().positive().optional(),
   cursor: objectIdString.optional(),
 });

@@ -25,6 +25,7 @@ import {
 } from "@/lib/cards-api";
 import { backendCardToFormDefaults } from "@/lib/transform-card";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
 
 const cardVisibilityOptions = [
   { value: "public", label: "Public" },
@@ -74,9 +75,6 @@ const cardVariantOptions = [
   { value: "company", label: "Company" },
 ];
 
-const DEFAULT_USER_ID =
-  process.env.NEXT_PUBLIC_API_USER_ID ?? "abcdabcdabcdabcdabcdabcd";
-
 type FormProps = {
   editingCardId?: string | null;
 };
@@ -88,6 +86,7 @@ const Form = ({ editingCardId = null }: FormProps) => {
     defaultValues,
   });
   const isEditMode = Boolean(editingCardId);
+  const { data: session } = useSession();
 
   const {
     data: cardData,
@@ -125,6 +124,10 @@ const Form = ({ editingCardId = null }: FormProps) => {
         : "Something went wrong. Please try again.";
 
   const onSubmit = (values: CardSchemaInput) => {
+    if (!session?.user?.email) {
+      console.error("Cannot submit form, user email is missing.");
+      return;
+    }
     const {
       backgroundImage,
       visibility,
@@ -146,7 +149,7 @@ const Form = ({ editingCardId = null }: FormProps) => {
       updateMutation.mutate({
         id: editingCardId,
         payload: {
-          userId: DEFAULT_USER_ID,
+          userId: session?.user?.email,
           backgroundImage,
           visibility,
           variant,
@@ -165,7 +168,7 @@ const Form = ({ editingCardId = null }: FormProps) => {
       });
     } else {
       createMutation.mutate({
-        userId: DEFAULT_USER_ID,
+        userId: session?.user?.email,
         visibility,
         variant,
         cardType,

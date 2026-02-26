@@ -50,7 +50,7 @@ const Modern = ({ card }: { card: CardSchemaInput }) => {
           themesMapping.accent,
         )}
       >
-        <div>
+        <div className="flex flex-col items-center justify-center gap-2">
           {cardType && (
             <span
               className={cn(

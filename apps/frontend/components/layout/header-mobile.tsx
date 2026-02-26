@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { HiOutlineBars3, HiXMark } from "react-icons/hi2";
-import { Button } from "@/components/ui/button";
+import { HeaderAuth } from "./header-auth";
 import { cn } from "@/lib/utils";
 
 export type NavLink = { href: string; label: string };
@@ -65,16 +65,10 @@ export function HeaderMobile({ navLinks }: HeaderMobileProps) {
               </Link>
             ))}
             <div className="mt-4 border-t border-white/10 pt-4">
-              <Button
-                asChild
-                variant="default"
-                size="sm"
-                className="w-full bg-zinc-100 text-zinc-900 transition-all duration-200 hover:scale-[1.02] hover:bg-zinc-200 active:scale-100"
-              >
-                <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                  Login
-                </Link>
-              </Button>
+              <HeaderAuth
+                buttonClassName="w-full"
+                onAction={() => setMobileMenuOpen(false)}
+              />
             </div>
           </nav>
         </div>
