@@ -60,13 +60,22 @@ export function HeaderAuth({
       data-testid="header-logout-button"
     >
       <span>Logout</span>
-      <Image
-        src={data?.user?.image ?? ""}
-        alt="User"
-        className="rounded-full"
-        width={20}
-        height={20}
-      />
+      {data?.user?.image?.trim() ? (
+        <Image
+          src={data.user.image}
+          alt={data.user.name ?? "User avatar"}
+          className="rounded-full"
+          width={20}
+          height={20}
+        />
+      ) : (
+        <span
+          className="flex h-5 w-5 items-center justify-center rounded-full bg-zinc-300 text-xs font-medium text-zinc-600"
+          aria-hidden
+        >
+          {(data?.user?.name ?? "?").charAt(0).toUpperCase()}
+        </span>
+      )}
     </Button>
   );
 }

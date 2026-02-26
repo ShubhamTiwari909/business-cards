@@ -124,6 +124,10 @@ const Form = ({ editingCardId = null }: FormProps) => {
         : "Something went wrong. Please try again.";
 
   const onSubmit = (values: CardSchemaInput) => {
+    if (!session?.user?.email) {
+      console.error("Cannot submit form, user email is missing.");
+      return;
+    }
     const {
       backgroundImage,
       visibility,
@@ -145,7 +149,7 @@ const Form = ({ editingCardId = null }: FormProps) => {
       updateMutation.mutate({
         id: editingCardId,
         payload: {
-          userId: session?.user?.email ?? "",
+          userId: session?.user?.email,
           backgroundImage,
           visibility,
           variant,
@@ -164,7 +168,7 @@ const Form = ({ editingCardId = null }: FormProps) => {
       });
     } else {
       createMutation.mutate({
-        userId: session?.user?.email ?? "",
+        userId: session?.user?.email,
         visibility,
         variant,
         cardType,
