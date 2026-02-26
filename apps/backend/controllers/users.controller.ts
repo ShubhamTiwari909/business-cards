@@ -27,21 +27,34 @@ export const addUser = async (
 
   const userExist = await checkIfUserExists(email);
 
-  if (userExist?.accessToken && userExist?._id) {
-    return res.status(200).json({
-      message: "User already exists",
-      accessToken: userExist.accessToken,
-    });
-  }
-  if (userExist?._id && !userExist?.accessToken) {
-    await User.updateOne(
-      { _id: userExist._id },
-      { $set: { accessToken: randomToken } },
-    );
-    await redis.set(`token:${randomToken}`, randomToken, { ex: TOKEN_TTL });
+  const existingCachedToken: {
+    accessToken: string;
+  } | null = await redis.get(`token:${userExist?.accessToken}`);
+
+  if (userExist?._id) {
+    const dbToken = userExist?.accessToken;
+    const cachedToken = existingCachedToken?.accessToken;
+
+    let activeToken = dbToken || cachedToken || randomToken;
+
+    if (!dbToken) {
+      await User.updateOne(
+        { _id: userExist._id },
+        { $set: { accessToken: activeToken } },
+      );
+    }
+
+    if (!cachedToken) {
+      await redis.set(
+        `token:${activeToken}`,
+        { accessToken: activeToken },
+        { ex: TOKEN_TTL },
+      );
+    }
+
     return res
       .status(200)
-      .json({ message: "User already exists", accessToken: randomToken });
+      .json({ message: "User already exists", accessToken: activeToken });
   }
 
   try {
@@ -55,9 +68,13 @@ export const addUser = async (
       accessToken: randomToken,
     });
     await newUser.save();
-    await redis.set(`token:${newUser.accessToken}`, newUser.accessToken, {
-      ex: TOKEN_TTL,
-    });
+    await redis.set(
+      `token:${newUser.accessToken}`,
+      { accessToken: newUser.accessToken },
+      {
+        ex: TOKEN_TTL,
+      },
+    );
     res
       .status(201)
       .json({ message: "User saved", accessToken: newUser.accessToken });
@@ -66,11 +83,7 @@ export const addUser = async (
   }
 };
 
-export const logoutUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const logoutUser = async (req: Request, res: Response) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader?.startsWith("Bearer ")) {
@@ -79,11 +92,15 @@ export const logoutUser = async (
 
   const token = authHeader.split(" ")[1];
 
-  // Remove from both cache and DB simultaneously
-  await Promise.all([
-    redis.del(`token:${token}`),
-    User.updateOne({ accessToken: token }, { $unset: { accessToken: "" } }),
-  ]);
+  try {
+    // Remove from both cache and DB simultaneously
+    await Promise.all([
+      redis.del(`token:${token}`),
+      User.updateOne({ accessToken: token }, { $unset: { accessToken: "" } }),
+    ]);
 
-  res.json({ ok: true });
+    res.json({ ok: true });
+  } catch (err) {
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };

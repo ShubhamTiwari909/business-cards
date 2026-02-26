@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { redis } from "../utils/redis-upstash";
 import { User } from "../models/Users";
 import { TOKEN_TTL } from "../constants";
+import mongoose from "mongoose";
 
 export const tokenAuth = async (
   req: Request,
@@ -18,10 +19,11 @@ export const tokenAuth = async (
 
   try {
     // 1. Check Upstash Redis cache first
-    const cachedToken = await redis.get(`token:${token}`);
+    const cachedToken: {
+      accessToken: string;
+    } | null = await redis.get(`token:${token}`);
 
     if (cachedToken) {
-      req.accessToken = cachedToken as string; // already parsed, Upstash auto deserializes JSON
       return next();
     }
 
@@ -35,18 +37,25 @@ export const tokenAuth = async (
     }
 
     // 3. Store in Redis with TTL
-    await redis.set(`token:${token}`, userToken, { ex: TOKEN_TTL });
+    await redis.set(
+      `token:${token}`,
+      { accessToken: userToken.accessToken },
+      { ex: TOKEN_TTL },
+    );
 
-    req.accessToken = userToken.accessToken as string;
     next();
   } catch (err) {
     console.error("Auth error:", err);
-    // Fail open — if Redis is down, fall back to DB only
-    const userToken = await User.findOne({ accessToken: token })
-      .select("accessToken")
-      .lean();
-    if (!userToken) return res.status(401).json({ error: "Invalid token" });
-    req.accessToken = userToken.accessToken as string;
+    try {
+      // Fail open — if Redis is down, fall back to DB only
+      const userToken = await User.findOne({ accessToken: token })
+        .select("accessToken")
+        .lean();
+      if (!userToken) return res.status(401).json({ error: "Invalid token" });
+    } catch (err) {
+      console.error("Auth error:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
     next();
   }
 };

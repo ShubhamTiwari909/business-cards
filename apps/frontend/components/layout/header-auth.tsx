@@ -55,8 +55,11 @@ export function HeaderAuth({
       className={cn(buttonClassName, extraButtonClass)}
       onClick={() => {
         onAction?.();
+        const accessToken = data?.user?.accessToken;
         signOut().then(() => {
-          logoutUser(data?.user?.accessToken as string);
+          if (accessToken) {
+            logoutUser(accessToken);
+          }
         });
       }}
       data-testid="header-logout-button"
