@@ -8,18 +8,21 @@ export type AddUserPayload = {
 };
 
 export async function addUser(payload: AddUserPayload, internalSecret: string) {
-  const { status, data } = await apiRequest<{ message: string }>(`${usersApiBaseUrl()}/add`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-internal-secret": internalSecret,
+  const { status, data } = await apiRequest<{ message: string }>(
+    `${usersApiBaseUrl()}/add`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-internal-secret": internalSecret,
+      },
+      body: JSON.stringify({
+        name: payload.name,
+        email: payload.email,
+        image: payload.image,
+        provider: payload.provider ?? "google",
+      }),
     },
-    body: JSON.stringify({
-      name: payload.name,
-      email: payload.email,
-      image: payload.image,
-      provider: payload.provider ?? "google",
-    }),
-  });
+  );
   return { status, data };
 }

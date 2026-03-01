@@ -91,13 +91,15 @@ const Form = ({ editingCardId = null }: FormProps) => {
 
   useEffect(() => {
     if (session?.user) {
-      getCards({ userId: session.user.email}).then((cards) => {
-        console.log(cards)
-      }).catch((error) => {
-        console.error(error)
-      })
+      getCards({ userId: session.user.email })
+        .then((cards) => {
+          console.log(cards);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
-  }, [session])
+  }, [session]);
 
   const {
     data: cardData,

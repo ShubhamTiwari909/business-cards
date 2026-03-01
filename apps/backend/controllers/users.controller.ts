@@ -11,7 +11,6 @@ export const addUser = async (
   res: Response,
   next: NextFunction,
 ) => {
-
   const parsedBody = addUserSchema.safeParse(req.body);
   if (!parsedBody.success) {
     return res.status(400).json({
@@ -24,9 +23,7 @@ export const addUser = async (
   const userExist = await checkIfUserExists(email);
 
   if (userExist?._id) {
-    return res
-      .status(200)
-      .json({ message: "User already exists" });
+    return res.status(200).json({ message: "User already exists" });
   }
 
   try {
@@ -39,9 +36,7 @@ export const addUser = async (
       isActive,
     });
     await newUser.save();
-    res
-      .status(201)
-      .json({ message: "User saved" });
+    res.status(201).json({ message: "User saved" });
   } catch (err) {
     next(err);
   }

@@ -5,7 +5,11 @@ export type CreateCardPayload = CardSchemaInput & {
   userId: string;
 };
 
-export async function getCards({ userId}: { userId: string | undefined | null }): Promise<BackendCard[]> {
+export async function getCards({
+  userId,
+}: {
+  userId: string | undefined | null;
+}): Promise<BackendCard[]> {
   const { data } = await apiRequest<{ data: BackendCard[] }>(
     `${cardsApiBaseUrl()}?userId=${userId}`,
     { method: "GET" },
@@ -16,9 +20,7 @@ export async function getCards({ userId}: { userId: string | undefined | null })
   return data.data;
 }
 
-export async function getCardById(
-  id: string,
-): Promise<BackendCard> {
+export async function getCardById(id: string): Promise<BackendCard> {
   const { data } = await apiRequest<{ data: BackendCard }>(
     `${cardsApiBaseUrl()}/${encodeURIComponent(id)}`,
     { method: "GET" },
