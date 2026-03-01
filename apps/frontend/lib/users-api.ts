@@ -8,10 +8,7 @@ export type AddUserPayload = {
 };
 
 export async function addUser(payload: AddUserPayload, internalSecret: string) {
-  const { status, data } = await apiRequest<{
-    message: string;
-    accessToken: string;
-  }>(`${usersApiBaseUrl()}/add`, {
+  const { status, data } = await apiRequest<{ message: string }>(`${usersApiBaseUrl()}/add`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,19 +21,5 @@ export async function addUser(payload: AddUserPayload, internalSecret: string) {
       provider: payload.provider ?? "google",
     }),
   });
-  return { status, data };
-}
-
-export async function logoutUser(accessToken: string) {
-  const { status, data } = await apiRequest<{ ok: boolean }>(
-    `${usersApiBaseUrl()}/logout`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    },
-  );
   return { status, data };
 }

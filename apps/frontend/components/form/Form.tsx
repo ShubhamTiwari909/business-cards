@@ -20,6 +20,7 @@ import { MdClear } from "react-icons/md";
 import {
   createCard,
   getCardById,
+  getCards,
   updateCard,
   type CreateCardPayload,
 } from "@/lib/cards-api";
@@ -88,6 +89,16 @@ const Form = ({ editingCardId = null }: FormProps) => {
   const isEditMode = Boolean(editingCardId);
   const { data: session } = useSession();
 
+  useEffect(() => {
+    if (session?.user) {
+      getCards({ userId: session.user.email}).then((cards) => {
+        console.log(cards)
+      }).catch((error) => {
+        console.error(error)
+      })
+    }
+  }, [session])
+
   const {
     data: cardData,
     isSuccess: cardLoaded,
@@ -96,10 +107,7 @@ const Form = ({ editingCardId = null }: FormProps) => {
   } = useQuery({
     queryKey: ["card", editingCardId],
     queryFn: () => {
-      if (!session?.user?.accessToken) {
-        return Promise.reject(new Error("Access token not available"));
-      }
-      return getCardById(editingCardId!, session.user.accessToken);
+      return getCardById(editingCardId!);
     },
     enabled: isEditMode && Boolean(editingCardId),
   });
@@ -112,10 +120,7 @@ const Form = ({ editingCardId = null }: FormProps) => {
 
   const createMutation = useMutation({
     mutationFn: (payload: CreateCardPayload) => {
-      if (!session?.user?.accessToken) {
-        return Promise.reject(new Error("Access token not available"));
-      }
-      return createCard(payload, session?.user?.accessToken);
+      return createCard(payload);
     },
   });
 
@@ -127,10 +132,7 @@ const Form = ({ editingCardId = null }: FormProps) => {
       id: string;
       payload: CreateCardPayload;
     }) => {
-      if (!session?.user?.accessToken) {
-        return Promise.reject(new Error("Access token not available"));
-      }
-      return updateCard(id, payload, session.user.accessToken);
+      return updateCard(id, payload);
     },
   });
 
