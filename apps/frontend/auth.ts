@@ -38,23 +38,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (response.status !== 200) {
           return false;
         }
-        user.accessToken = response.data.accessToken;
         return true;
       } catch (error) {
         console.error("Failed to add user during sign in:", error);
         return false;
       }
-    },
-    async jwt({ token, user }) {
-      if (user?.accessToken) {
-        token.accessToken = user.accessToken; // persist into encrypted NextAuth cookie
-      }
-      return token;
-    },
-
-    async session({ session, token }) {
-      session.user.accessToken = token.accessToken as string; // expose to frontend via useSession()
-      return session;
     },
   },
 });
