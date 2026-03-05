@@ -5,6 +5,21 @@ export type CreateCardPayload = CardSchemaInput & {
   userId: string;
 };
 
+export async function getCards({
+  userId,
+}: {
+  userId: string | undefined | null;
+}): Promise<BackendCard[]> {
+  const { data } = await apiRequest<{ data: BackendCard[] }>(
+    `${cardsApiBaseUrl()}?userId=${userId}`,
+    { method: "GET" },
+  );
+  if (!data?.data) {
+    throw new Error("Card not found");
+  }
+  return data.data;
+}
+
 export async function getCardById(id: string): Promise<BackendCard> {
   const { data } = await apiRequest<{ data: BackendCard }>(
     `${cardsApiBaseUrl()}/${encodeURIComponent(id)}`,
@@ -23,6 +38,9 @@ export async function createCard(
     `${cardsApiBaseUrl()}/create`,
     {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(payload),
     },
   );
@@ -40,6 +58,9 @@ export async function updateCard(
     `${cardsApiBaseUrl()}/update/${encodeURIComponent(id)}`,
     {
       method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(payload),
     },
   );

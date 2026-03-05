@@ -9,13 +9,24 @@ export async function apiRequest<T>(
   url: string,
   options: RequestInit = {},
 ): Promise<{ data: T; status: number }> {
-  const res = await fetch(url, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
-  });
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      ...options,
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+    });
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? `Network request failed: ${error.message}`
+        : "Network request failed",
+    );
+  }
+
   const text = await res.text();
   let data: unknown;
   try {

@@ -7,12 +7,15 @@ import { dynamicLimiter } from "./utils/rate-limit";
 import { dbConnection } from "./utils/db-connection";
 import usersRouter from "./routes/users";
 import cardsRouter from "./routes/cards";
+import cookieParser from "cookie-parser";
+import { verifyAuth as tokenAuth } from "./middlware/token-auth";
 
 const app = express();
 // Trust first proxy so req.ip reflects the client (from X-Forwarded-For), not the proxy; required for correct rate limiting behind a reverse proxy or load balancer.
 app.set("trust proxy", 1);
 app.use(corsHandler);
 app.use(cspHandler);
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
@@ -22,15 +25,23 @@ app.get("/", dynamicLimiter(10, { windowMs: 60 * 1000 }), (_, res) => {
 });
 
 app.use("/api/users", usersRouter);
-app.use("/api/cards", cardsRouter);
+app.use("/api/cards", tokenAuth, cardsRouter);
 
 app.use(globalErrorHandler);
 
 const PORT = process.env.PORT || 3001;
 
 (async () => {
-  await dbConnection();
-  app.listen(PORT, () => {
-    console.log(`Server is running on port: ${PORT}`);
-  });
+  try {
+    await dbConnection();
+    app.listen(PORT, () => {
+      console.log(`Server is running on port: ${PORT}`);
+    });
+  } catch (error) {
+    console.error(
+      "Failed to bootstrap server:",
+      error instanceof Error ? error.message : error,
+    );
+    process.exit(1);
+  }
 })();

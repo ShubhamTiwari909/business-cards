@@ -4,7 +4,6 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-
 const buttonClassName =
   "bg-zinc-100 text-zinc-900 shadow-none transition-all duration-200 hover:scale-105 hover:bg-zinc-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] active:scale-100 cursor-pointer";
 

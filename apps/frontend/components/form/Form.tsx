@@ -20,6 +20,7 @@ import { MdClear } from "react-icons/md";
 import {
   createCard,
   getCardById,
+  getCards,
   updateCard,
   type CreateCardPayload,
 } from "@/lib/cards-api";
@@ -88,6 +89,18 @@ const Form = ({ editingCardId = null }: FormProps) => {
   const isEditMode = Boolean(editingCardId);
   const { data: session } = useSession();
 
+  useEffect(() => {
+    if (session?.user) {
+      getCards({ userId: session.user.email })
+        .then((cards) => {
+          console.log(cards);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [session]);
+
   const {
     data: cardData,
     isSuccess: cardLoaded,
@@ -95,7 +108,9 @@ const Form = ({ editingCardId = null }: FormProps) => {
     isError: cardFetchError,
   } = useQuery({
     queryKey: ["card", editingCardId],
-    queryFn: () => getCardById(editingCardId!),
+    queryFn: () => {
+      return getCardById(editingCardId!);
+    },
     enabled: isEditMode && Boolean(editingCardId),
   });
 
@@ -106,12 +121,21 @@ const Form = ({ editingCardId = null }: FormProps) => {
   }, [cardLoaded, cardData, methods]);
 
   const createMutation = useMutation({
-    mutationFn: (payload: CreateCardPayload) => createCard(payload),
+    mutationFn: (payload: CreateCardPayload) => {
+      return createCard(payload);
+    },
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, payload }: { id: string; payload: CreateCardPayload }) =>
-      updateCard(id, payload),
+    mutationFn: ({
+      id,
+      payload,
+    }: {
+      id: string;
+      payload: CreateCardPayload;
+    }) => {
+      return updateCard(id, payload);
+    },
   });
 
   const isPending = createMutation.isPending || updateMutation.isPending;
