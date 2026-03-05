@@ -32,8 +32,16 @@ app.use(globalErrorHandler);
 const PORT = process.env.PORT || 3001;
 
 (async () => {
-  await dbConnection();
-  app.listen(PORT, () => {
-    console.log(`Server is running on port: ${PORT}`);
-  });
+  try {
+    await dbConnection();
+    app.listen(PORT, () => {
+      console.log(`Server is running on port: ${PORT}`);
+    });
+  } catch (error) {
+    console.error(
+      "Failed to bootstrap server:",
+      error instanceof Error ? error.message : error,
+    );
+    process.exit(1);
+  }
 })();
